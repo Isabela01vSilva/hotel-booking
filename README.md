@@ -60,6 +60,3 @@ O layout foi baseado no Figma disponibilizado no desafio técnico:
    pnpm install
    pnpm run server
 ---
-
-
-
