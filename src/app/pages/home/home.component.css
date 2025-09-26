@@ -1,0 +1,11 @@
+.home-content {
+  max-width: 100%;
+}
+
+.home-content .home-title {
+  color: #00264d;
+}
+
+.home-content .home-title-sub {
+  color: #0080ff;
+}
