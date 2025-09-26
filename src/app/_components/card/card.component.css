@@ -1,0 +1,41 @@
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  width: 400px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-image {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.card-price {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  color: white;
+  z-index: 2;
+}
+
+.card-content {
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column; /* Empilha verticalmente */
+  align-items: flex-start; /* Alinha os itens à esquerda */
+  gap: 4px; /* Espaçamento entre os itens (opcional) */
+}
