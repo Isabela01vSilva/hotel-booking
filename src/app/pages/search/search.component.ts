@@ -9,5 +9,5 @@ import { CardComponent } from '../../_components/card/card.component';
   styleUrl: './search.component.css',
 })
 export class SearchComponent {
-  cardsArray = new Array(2);
+  cardsArray = new Array(12);
 }
