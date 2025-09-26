@@ -1,0 +1,53 @@
+.search-box {
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 11px;
+  padding: 5px 30px;
+  height: 100px;
+
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.09);
+}
+
+.search-item {
+  width: 500px;
+  padding: 0;
+  margin: 0;
+}
+
+.border-left-custom {
+  border-left: 1px solid #E3E6E9;
+  padding-left: 12px;
+}
+
+.label-row i {
+  font-size: 18px;
+  color: #0080ff;
+}
+
+.search-item input {
+  border: none;
+  outline: none;
+}
+
+/* Hospedes */
+
+.custom-input input {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0;
+  height: 38px;
+  border: none;
+  outline: none;
+}
+
+.hosp-item {
+  padding: 10px;
+  border-bottom: 1px solid #698096;
+}
+.hosp-item button {
+  padding: 10px;
+  color: #ffffff;
+  background-color: 698096;
+  border-radius: 10px;
+  border: none;
+}
