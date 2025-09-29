@@ -7,13 +7,16 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-items: center;
   padding: 0px 60px;
   background-color: #e3ebf3;
 }
 
+header.white-bg {
+  background-color: #ffffff;
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.09);
+}
+
 header h1 {
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-style: normal;
   font-size: 20px;
@@ -30,6 +33,7 @@ header ul {
   display: flex;
   align-items: center;
   margin-left: auto;
+  gap: 20px;
 }
 
 header ul li {
@@ -46,10 +50,12 @@ header ul li i {
 }
 
 header ul li span {
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
   line-height: 26px;
-  font-family: "Poppins", sans-serif;
+  letter-spacing: 0;
+
   color: #698096;
   cursor: pointer;
 }

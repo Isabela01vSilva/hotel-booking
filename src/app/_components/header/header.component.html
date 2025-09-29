@@ -1,9 +1,15 @@
-<header>
+<header [ngClass]="{ 'white-bg': isWhiteBg$ | async }">
   <h1>infotravel</h1>
-  <ul>
-    <li>
-      <i class="ph ph-sign-in"></i>
-      <span>Iniciar Sessão</span>
-    </li>
-  </ul>
+  <nav>
+    <ul>
+      <li *ngIf="showHomeLink$ | async" (click)="pesquisar()">
+        <i class="ph ph-house"></i>
+        <span>Página Inicial</span>
+      </li>
+      <li>
+        <i class="ph ph-sign-in"></i>
+        <span>Iniciar Sessão</span>
+      </li>
+    </ul>
+  </nav>
 </header>
