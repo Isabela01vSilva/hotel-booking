@@ -1,30 +1,74 @@
-<div>
-<h4>Finalize sua reserva!</h4>
-<div>
-  <div>
-    div1 - Hotel: nome
-  </div>
-  <div>
-    div 2 - Contato da reserva
-  </div>
-</div>
-<div>
-  <div>
-    <h2>Sua reserva</h2>
-    <hr>
-    <h2>tadshotel Steegoversloot</h2>
-    <p>Rua Deputado Laercio Corte, 1501, São Paulo BR</p>
-    <p>Tipo de quarto</p>
-    <p>stts do quarto</p>
-    <div>
-      <p>importo</p>
-      <p>R$ valor</p>
+<app-search-engine></app-search-engine>
+<h4 class="reserva-titulo">Finalize sua reserva!</h4>
+
+<div class="reserva-container">
+  <div class="dados-reserva">
+    <!-- Dados do hóspede -->
+    <div class="bloco-dados">
+      <p class="titulo">Hotel: Stadshotel Steegoverhesloot</p>
+
+      <div class="linha-inputs">
+        <div class="campo-form">
+          <label for="nome">Nome (Hóspede)</label>
+          <input type="text" id="nome" name="nome" />
+        </div>
+
+        <div class="campo-form">
+          <label for="sobrenome">Sobrenome</label>
+          <input type="text" id="sobrenome" name="sobrenome" />
+        </div>
+      </div>
     </div>
-    <div>
-      <p>total</p>
-      <p>valor total</p>
+    <!-- Dados de contato -->
+    <div class="bloco-dados">
+      <p class="titulo">Contato da reserva</p>
+
+      <div class="linha-inputs">
+        <div class="campo-form">
+          <label for="contato-nome">Nome</label>
+          <input type="text" id="contato-nome" name="contato-nome" />
+        </div>
+
+        <div class="campo-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" />
+        </div>
+
+        <div class="campo-form">
+          <label for="telefone">Telefone (WhatsApp)</label>
+          <input type="tel" id="telefone" name="telefone" />
+        </div>
+      </div>
+
+      <div class="campo-form">
+        <label for="observacoes">Observações</label>
+        <textarea id="observacoes" name="observacoes" rows="4"></textarea>
+      </div>
     </div>
-    <app-button textoBotao="RESERVAR"></app-button>
   </div>
-</div>
-</div>
+
+  <!-- Resumo da reserva -->
+    <div class="bloco-resumo">
+      <h2>Sua reserva</h2>
+      <h2 class="resumo-detalhes">Stadshotel Steegoversloot</h2>
+
+      <p class="resumo-endereco">
+        Rua Deputado Laercio Corte, 1501, São Paulo BR
+      </p>
+
+      <p class="resumo-quarto-tipo">Tipo de quarto</p>
+      <p class="resumo-quarto-status">Status do quarto</p>
+
+      <div class="resumo-valor">
+        <p>Importo</p>
+        <p>R$ valor</p>
+      </div>
+
+      <div class="resumo-total">
+        <p>Total</p>
+        <p>Valor total</p>
+      </div>
+
+      <app-button textoBotao="RESERVAR" (click)="pesquisar()"></app-button>
+    </div>
+  </div>

@@ -1,0 +1,64 @@
+.reserva-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  padding: 20px;
+}
+
+
+.dados-reserva {
+  width: 100%;
+}
+
+.bloco-dados {
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.titulo {
+  font-weight: bold;
+}
+
+.linha-inputs {
+  display: flex;
+}
+
+.campo-form {
+  margin: 0px 10px
+}
+
+.campo-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.campo-form input {
+  width: 300px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#observacoes {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Sobre a Reserva */
+.bloco-resumo {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resumo-detalhes p {
+  margin: 4px 0;
+}
