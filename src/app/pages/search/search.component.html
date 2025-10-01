@@ -12,7 +12,8 @@
   </div>
 
   <div class="card-grid">
-    <app-card *ngFor="let card of cardsArray"></app-card>
-    <app-card></app-card>
+    @for (hotel of (hotels$ | async); track $index) {
+      <app-card [hotel]="hotel" ></app-card>
+    }
   </div>
 </div>

@@ -30,7 +30,6 @@
 }
 
 /* Hospedes */
-
 .custom-input input {
   font-size: 1rem;
   line-height: 1.5;
@@ -41,8 +40,9 @@
 }
 
 .hosp-item {
-  padding: 10px;
+  padding: 20px;
   border-bottom: 1px solid #698096;
+  background-color: #FFFFFF;
 }
 .hosp-item button {
   padding: 10px;
@@ -51,3 +51,82 @@
   border-radius: 10px;
   border: none;
 }
+/*  */
+/*  */
+/*  */
+/*  */
+/* Container do item */
+
+.search-item {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Ícone e label na mesma linha */
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+/* Campo de input com largura total */
+.custom-input {
+  width: 200px;
+}
+
+/* Estilo do menu (mat-menu) */
+.mat-menu-panel.content-item {
+  padding: 12px 16px;
+  min-width: 240px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Bloco individual (adultos/crianças) */
+.hosp-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Botões de + e - com número no meio */
+.content-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.content-btn button {
+  min-width: 32px;
+  height: 32px;
+  font-size: 18px;
+  border-radius: 4px;
+  background-color: #e3ebf3;
+  color: #00264d;
+}
+
+.content-btn span {
+  width: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Botão aplicar */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.actions app-button {
+  font-size: 14px;
+}
+

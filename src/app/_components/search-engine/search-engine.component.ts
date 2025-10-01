@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ApiServiceService } from './../../services/api-service.service';
+import { Component, Injectable } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { debounceTime, map, startWith } from 'rxjs/operators';
@@ -12,9 +13,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from "../../_components/button/button.component";
+import { ButtonComponent } from '../../_components/button/button.component';
 
 import { Router } from '@angular/router';
+import { IHotel } from '../../entity/hotel.interface';
 
 @Component({
   selector: 'app-search-engine',
@@ -29,24 +31,21 @@ import { Router } from '@angular/router';
     MatAutocompleteModule,
     MatIconModule,
     MatOptionModule,
-    ButtonComponent,
+    ButtonComponent
   ],
   templateUrl: './search-engine.component.html',
-  styleUrl: './search-engine.component.css'
+  styleUrl: './search-engine.component.css',
 })
 export class SearchEngineComponent {
+  constructor(private router: Router, private apiService: ApiServiceService) {
 
-  constructor(private router: Router) {}
+  }
 
-    pesquisar() {
+  pesquisar() {
     this.router.navigate(['/search']);
   }
 
-
-  // ========================
-  // HÓSPEDES
-  // ========================
-  adultos = 1;
+  adultos = 2;
   criancas = 0;
 
   // Valores temporários enquanto o menu está aberto
@@ -70,15 +69,20 @@ export class SearchEngineComponent {
   }
 
   applySelection(menuTrigger: MatMenuTrigger) {
-    // Atualiza os valores reais
-    this.adultos = this.tempAdultos;
-    this.criancas = this.tempCriancas;
+  this.adultos = this.tempAdultos;
+  this.criancas = this.tempCriancas;
+  menuTrigger.closeMenu();
+}
 
-    // Fecha o menu
-    menuTrigger.closeMenu();
-  }
 
   getTotalPessoas(): string {
-    return `${this.adultos} adulto${this.adultos > 1 ? 's' : ''}, ${this.criancas} criança${this.criancas > 1 ? 's' : ''}`;
-  }
+  const adultosText = `${this.adultos} adulto${this.adultos > 1 ? 's' : ''}`;
+  const criancasText = this.criancas > 0
+    ? `, ${this.criancas} criança${this.criancas > 1 ? 's' : ''}`
+    : '';
+  const quartoText = `, 1 Quarto`;
+
+  return adultosText + criancasText + quartoText;
+}
+
 }
