@@ -1,118 +1,46 @@
-<form class="search-box d-flex align-items-center gap-3 flex-wrap">
+<form class="search-box">
   <div class="search-item">
-    <div class="label-row d-flex align-items-center">
-      <i class="ph ph-map-pin me-1"></i>
-      <label for="destino" class="form-label mb-0">Destino</label>
+    <div class="label-row">
+      <i class="ph ph-map-pin"></i>
+      <label for="destino">Destino</label>
     </div>
     <input
       type="text"
       id="destino"
-      class="form-control"
-      placeholder="Ex: São Paulo"
     />
   </div>
 
   <div class="search-item border-left-custom">
-    <div class="label-row d-flex align-items-center">
-      <i class="ph ph-calendar-blank me-1"></i>
-      <label for="entrada" class="form-label mb-0">Entrada</label>
+    <div class="label-row">
+      <i class="ph ph-calendar-blank"></i>
+      <label for="entrada">Entrada</label>
     </div>
     <input
       type="text"
       id="entrada"
-      class="form-control"
-      placeholder="Ex: 25/09/2025"
     />
   </div>
 
   <div class="search-item border-left-custom">
-    <div class="label-row d-flex align-items-center">
-      <i class="ph ph-calendar-blank me-1"></i>
-      <label for="saida" class="form-label mb-0">Saída</label>
+    <div class="label-row">
+      <i class="ph ph-calendar-blank"></i>
+      <label for="saida">Saída</label>
     </div>
     <input
       type="text"
       id="saida"
-      class="form-control"
-      placeholder="Ex: 25/10/2025"
     />
   </div>
 
   <div class="search-item border-left-custom">
-    <div class="label-row d-flex align-items-center">
-      <i class="ph ph-users me-1"></i>
-      <label for="hospedes" class="form-label mb-0">Hóspedes</label>
+    <div class="label-row">
+      <i class="ph ph-users"></i>
+      <label for="hospedes">Hóspedes</label>
     </div>
-
-    <mat-form-field appearance="outline" class="custom-input">
-      <input
-        matInput
-        [value]="getTotalPessoas()"
-        [matMenuTriggerFor]="menu"
-        #menuTrigger="matMenuTrigger"
-      readonly id="hospedes"
-      />
-    </mat-form-field>
-
-    <mat-menu #menu="matMenu" class="content-item">
-      <div class="hosp-item">
-        <span>Adultos</span>
-        <div
-          class="content-btn d-flex align-items-center justify-content-between"
-        >
-          <button
-            type="button"
-            mat-mini-button
-            (click)="decrement('adultos'); "
-          >
-            −
-          </button>
-          <span>{{ tempAdultos }}</span>
-          <button
-            type="button"
-            mat-mini-button
-            (click)="increment('adultos'); $event.stopPropagation()"
-          >
-            +
-          </button>
-        </div>
-      </div>
-
-      <div class="hosp-item">
-        <span>Crianças</span>
-        <div
-          class="content-btn d-flex align-items-center justify-content-between"
-        >
-          <button
-            type="button"
-            mat-mini-button
-            color="primary"
-            (click)="decrement('criancas'); $event.stopPropagation()"
-          >
-            −
-          </button>
-          <span>{{ tempCriancas }}</span>
-          <button
-            type="button"
-            mat-mini-button
-            color="primary"
-            (click)="increment('criancas'); $event.stopPropagation()"
-          >
-            +
-          </button>
-        </div>
-      </div>
-
-      <div class="actions">
-        <app-button
-          textoBotao="Aplicar"
-          (click)="applySelection(menuTrigger)"
-        ></app-button>
-      </div>
-    </mat-menu>
+    <input type="text" id="hospedes" />
   </div>
-  <!-- Botão de busca -->
-  <div>
-    <app-button textoBotao="Pesquisar" (click)="pesquisar()"></app-button>
+
+  <div class="search-item">
+    <app-button textoBotao="Pesquisar" (click)="pesquisar()" class="btn-search"></app-button>
   </div>
 </form>

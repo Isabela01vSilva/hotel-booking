@@ -2,7 +2,6 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 12px;
-  width: 400px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -33,9 +32,16 @@
   gap: 10px;
 }
 
-.card-header {
+.star-row {
   display: flex;
-  flex-direction: column; /* Empilha verticalmente */
-  align-items: flex-start; /* Alinha os itens à esquerda */
-  gap: 4px; /* Espaçamento entre os itens (opcional) */
+  flex-wrap: nowrap;
+  gap: 4px;
 }
+
+.star-icon {
+  color: gold;
+}
+
+  /* @media(){
+     d-flex justify-content-between
+  } */

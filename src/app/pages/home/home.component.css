@@ -1,11 +1,27 @@
-.home-content {
-  max-width: 100%;
+h1 {
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 0%;
+  font-weight: 600;
+  color: #000000;
 }
 
-.home-content .home-title {
+h1 .home-title {
   color: #00264d;
 }
 
-.home-content .home-title-sub {
+h1 .home-title-sub{
   color: #0080ff;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1440px) {
+  h1 {
+    font-size: 50px;
+  }
 }

@@ -4,4 +4,7 @@
   gap: 16px;
 }
 
-
+.page-container {
+  background-color: aqua;
+  margin: 5px 45px;
+}

@@ -1,21 +1,27 @@
-<div class="card">
+@if (hotel$ | async) {
+  <div class="card">
   <div class="card-image-wrapper">
-    <img
-      src="{{ image }}"
-      class="card-image"
-      alt="Hotel"
-    />
-    <span class="card-price"><b>{{ currency  }} {{ hotelMinPrice }}</b>/ noite</span>
+    <img src="{{ image }}" class="card-image" alt="Hotel" />
+    <span class="card-price"
+      ><b>{{ currency }} {{ hotelMinPrice }}</b
+      >/ noite</span
+    >
   </div>
-  <div class="card-content d-flex justify-content-between">
+  <div class="card-content">
     <div class="card-header">
       <b class="hotel-name">{{ hotelName }}</b>
-      @for (s of arrayIndex; track $index) {
-        <i class="ph ph-star star-icon"></i>
-      }
+      <div class="star-row">
+        @for (s of arrayIndex; track $index) {
+       <i class="ph-fill ph-star star-icon"></i>
+
+        }
+      </div>
     </div>
     <div class="card-actions">
-      <app-button textoBotao="Ver mais"  (click)="pesquisar()"></app-button>
+      <app-button textoBotao="Ver mais" (click)="pesquisar()"></app-button>
     </div>
   </div>
 </div>
+}
+
+
