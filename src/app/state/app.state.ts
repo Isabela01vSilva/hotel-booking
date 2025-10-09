@@ -1,5 +1,7 @@
-import { HotelState } from "../entity/state/hotel.reducer";
+import { HotelState } from "../entity/state/hotel/hotel.reducer";
+import { SuggestionsState } from "../entity/state/suggestion/suggestions.reducer";
 
 export interface IAppState {
-  hotels: HotelState
+  hotels: HotelState,
+  suggestions: SuggestionsState
 }

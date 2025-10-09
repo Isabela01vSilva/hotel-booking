@@ -2,7 +2,7 @@ import { ICurrency } from './currency.interface'
 import { IRoom } from './room.interface'
 
 export interface IHotel{
-  id: Number,
+  id: number,
   hotel: {
     name: string,
     address: string,

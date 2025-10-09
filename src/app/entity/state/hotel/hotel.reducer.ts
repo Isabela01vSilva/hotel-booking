@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { IHotel } from '../hotel.interface';
 import { hotelsActions } from './hotel.actions';
+import { IHotel } from '../../hotel.interface';
 
 enum HotelStatus {
   loading = 'loading',

@@ -4,7 +4,7 @@
   <div class="dados-reserva">
     <!-- Dados do hóspede -->
     <div class="bloco-dados">
-      <p class="titulo">Hotel: Stadshotel Steegoverhesloot</p>
+      <p class="titulo">Hotel: {{ hotel.hotel.name }}</p>
 
       <div class="linha-inputs">
         <div class="campo-form">
@@ -25,49 +25,69 @@
       <div class="linha-inputs">
         <div class="campo-form">
           <label for="contato-nome">Nome</label>
-          <input type="text" id="contato-nome" name="contato-nome" />
+          <input
+            type="text"
+            id="contato-nome"
+            name="contato-nome"
+            placeholder="Digite um nome"
+          />
         </div>
 
         <div class="campo-form">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Digite seu e-mail"
+          />
         </div>
 
         <div class="campo-form">
           <label for="telefone">Telefone (WhatsApp)</label>
-          <input type="tel" id="telefone" name="telefone" />
+          <input
+            type="tel"
+            id="telefone"
+            name="telefone"
+            placeholder="(XX) XXXXX-XXXX"
+          />
         </div>
       </div>
 
       <div class="campo-form">
         <label for="observacoes">Observações</label>
-        <textarea id="observacoes" name="observacoes" rows="4"></textarea>
+        <textarea
+          id="observacoes"
+          name="observacoes"
+          rows="4"
+          placeholder="Sua mensagem"
+        ></textarea>
       </div>
     </div>
   </div>
 
   <!-- Resumo da reserva -->
-    <div class="bloco-resumo">
-      <h2>Sua reserva</h2>
-      <h2 class="resumo-detalhes">Stadshotel Steegoversloot</h2>
+  <div class="bloco-resumo">
+    <h2>Sua reserva</h2>
+    <h2 class="resumo-detalhes">{{ hotel.hotel.name }}</h2>
 
-      <p class="resumo-endereco">
-        Rua Deputado Laercio Corte, 1501, São Paulo BR
-      </p>
+    <p class="resumo-endereco">
+      {{ hotel.hotel.address }}
+    </p>
 
-      <p class="resumo-quarto-tipo">Tipo de quarto</p>
-      <p class="resumo-quarto-status">Status do quarto</p>
+    <p class="resumo-quarto-tipo">Tipo de quarto</p>
+    <p class="resumo-quarto-status">Status do quarto</p>
 
-      <div class="resumo-valor">
-        <p>Importo</p>
-        <p>R$ valor</p>
-      </div>
-
-      <div class="resumo-total">
-        <p>Total</p>
-        <p>Valor total</p>
-      </div>
-
-      <app-button textoBotao="RESERVAR" (click)="pesquisar()"></app-button>
+    <div class="resumo-valor">
+      <p>Importo</p>
+      <p>R$ valor</p>
     </div>
+
+    <div class="resumo-total">
+      <p>Total</p>
+      <p>Valor total</p>
+    </div>
+
+    <app-button textoBotao="RESERVAR" (click)="pesquisar()"></app-button>
   </div>
+</div>

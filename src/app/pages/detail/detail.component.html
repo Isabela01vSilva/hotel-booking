@@ -1,37 +1,38 @@
-<app-search-engine></app-search-engine>
+@if (hotel$ | async; as hotel) {
 <div class="hotel-container">
-  <!-- Bloco principal com imagem e informações -->
   <div class="hotel-hero">
     <div class="hotel-info d-flex">
       <img
-        src="https://khotel.com.br/wp-content/uploads/2025/05/Suite-Master-3-960x560.jpg"
-        alt="Imagem do hotel"
+        src="{{ hotel.hotel.image }}"
+        alt="{{ hotel.hotel.name }}"
         class="hotel-image"
       />
       <div class="hotel-info">
-        <h1 class="hotel-name">Stadshotel Steegoversloot</h1>
+        <h1 class="hotel-name">{{ hotel.hotel.name }}</h1>
 
         <div class="hotel-location d-flex align-items-center">
           <i class="ph ph-map-pin me-1"></i>
-          <h3 class="hotel-address">
-            Steegoversloot 56, 3311 PP Dordrecht, Países Baixos
-          </h3>
+          <h3 class="hotel-address">{{ hotel.hotel.address }}</h3>
         </div>
 
-         <div class="hotel-rating">
-          <i class="ph ph-star star-icon"></i>
+        <div class="hotel-rating">
+          @for (s of getStarsArray(hotel.hotel.stars); track $index) {
+          <i class="ph-fill ph-star star-icon"></i>
+          }
         </div>
 
-        <p class="hotel-description">
-          tis quis soluta est in odio, essemagnam quam quod perspiciatis ratione voluptatibus voluptatemvoluptatum aut vel beatae?
-        </p>
+        <p class="hotel-description">{{ hotel.hotel.description }}</p>
       </div>
-
     </div>
 
     <div>
       <h3 class="available-rooms-title mt-4">Quartos Disponíveis</h3>
-      <app-room-option></app-room-option>
+      <div>
+        @for (room of hotel.rooms; track $index) {
+        <app-room-option [room]="room"></app-room-option>
+        }
+      </div>
     </div>
   </div>
 </div>
+}

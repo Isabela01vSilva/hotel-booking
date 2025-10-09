@@ -1,46 +1,166 @@
-<form class="search-box">
+<div class="search-box">
+  <!-- Destino -->
   <div class="search-item">
     <div class="label-row">
       <i class="ph ph-map-pin"></i>
       <label for="destino">Destino</label>
     </div>
-    <input
-      type="text"
-      id="destino"
-    />
+
+    <!-- Campo de Autocomplete -->
+    <mat-form-field appearance="outline" class="exemplo-largura-total">
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+        <!-- (optionSelected)="onOptionSelected($event.option.value)" -->
+        @for (opcao of filteredOptions$ | async; track opcao.id) {
+        <mat-option [value]="opcao">
+          <div class="suggestion-item">
+            <i class="ph ph-map-pin suggestion-icon"></i>
+            <div class="suggestion-texts">
+              <div class="suggestion-name">{{ opcao.name }}</div>
+              <div class="suggestion-region">{{ opcao.region }}</div>
+            </div>
+          </div>
+        </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
+  <!-- Entrada -->
   <div class="search-item border-left-custom">
     <div class="label-row">
       <i class="ph ph-calendar-blank"></i>
       <label for="entrada">Entrada</label>
     </div>
-    <input
-      type="text"
-      id="entrada"
-    />
+    <!-- Datepicker Entrada -->
+    <mat-form-field>
+      <mat-label>Escolha uma data</mat-label>
+      <input matInput [matDatepicker]="pickerEntrada" />
+      <mat-hint>MM/DD/AAAA</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerEntrada"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerEntrada></mat-datepicker>
+    </mat-form-field>
   </div>
 
+  <!-- Saída -->
   <div class="search-item border-left-custom">
     <div class="label-row">
       <i class="ph ph-calendar-blank"></i>
       <label for="saida">Saída</label>
     </div>
-    <input
-      type="text"
-      id="saida"
-    />
+    <!-- Datepicker Saída -->
+    <mat-form-field>
+      <mat-label>Escolha uma data</mat-label>
+      <input matInput [matDatepicker]="pickerSaida" />
+      <mat-hint>MM/DD/AAAA</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerSaida"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerSaida></mat-datepicker>
+    </mat-form-field>
   </div>
 
+  <!-- Hóspedes -->
   <div class="search-item border-left-custom">
     <div class="label-row">
       <i class="ph ph-users"></i>
       <label for="hospedes">Hóspedes</label>
     </div>
-    <input type="text" id="hospedes" />
+
+    <mat-form-field appearance="outline" class="custom-input">
+      <input
+        matInput
+        [value]="getTotalPessoas()"
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        readonly
+        id="hospedes"
+      />
+    </mat-form-field>
+
+    <!-- Menu de seleção de hóspedes -->
+    <mat-menu #menu="matMenu" class="content-item">
+      <!-- Adultos -->
+      <div class="hosp-item">
+        <span>Adultos</span>
+        <div
+          class="content-btn d-flex align-items-center justify-content-between"
+        >
+          <button type="button" mat-mini-button (click)="decrement('adultos')">
+            −
+          </button>
+          <span>{{ tempAdultos }}</span>
+          <button
+            type="button"
+            mat-mini-button
+            (click)="increment('adultos'); $event.stopPropagation()"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Crianças -->
+      <div class="hosp-item">
+        <span>Crianças</span>
+        <div
+          class="content-btn d-flex align-items-center justify-content-between"
+        >
+          <button
+            type="button"
+            mat-mini-button
+            (click)="decrement('criancas'); $event.stopPropagation()"
+          >
+            −
+          </button>
+          <span>{{ tempCriancas }}</span>
+          <button
+            type="button"
+            mat-mini-button
+            (click)="increment('criancas'); $event.stopPropagation()"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Ação -->
+      <div class="actions">
+        <app-button
+          textoBotao="Aplicar"
+          (click)="applySelection(menuTrigger)"
+        ></app-button>
+      </div>
+    </mat-menu>
   </div>
 
+  <!-- Botão de Pesquisa -->
   <div class="search-item">
-    <app-button textoBotao="Pesquisar" (click)="pesquisar()" class="btn-search"></app-button>
+    <a>
+      <app-button
+        textoBotao="Pesquisar"
+        class="btn-search"
+        routerLink="search"
+      ></app-button>
+    </a>
   </div>
-</form>
+</div>
+
+<!-- Roteador Angular -->
+<div>
+  <router-outlet
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+  ></router-outlet>
+</div>

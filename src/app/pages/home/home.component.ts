@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { SearchEngineComponent } from "../../_components/search-engine/search-engine.component";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SearchEngineComponent],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+   ngOnInit(): void {
+     this.activate.emit
+   }
+
+   @Output() activate = new EventEmitter<void>();
+
+
 
 }

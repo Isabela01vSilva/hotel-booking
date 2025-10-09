@@ -1,10 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { hotelsSelector } from './hotel.selectors';
 import { inject } from '@angular/core';
-import { ApiServiceService } from '../../services/api-service.service';
+import { IHotel } from '../../hotel.interface';
 import { hotelsActions } from './hotel.actions';
 import { map, switchMap, tap } from 'rxjs';
-import { IHotel } from '../hotel.interface';
+import { ApiServiceService } from '../../../services/api-service.service';
 
 export const findHotelsEffect = createEffect(
   (actions$ = inject(Actions), apiService = inject(ApiServiceService)) => {
