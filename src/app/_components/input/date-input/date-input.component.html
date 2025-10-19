@@ -1,0 +1,22 @@
+<div class="search-item border-left-custom">
+  <div class="label-row">
+    <i class="ph ph-calendar-blank"></i>
+    <label for="{{ labelText }}">{{ labelText }}</label>
+  </div>
+
+  <mat-form-field appearance="outline" [class.error-field]="isError">
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [value]="value"
+      (input)="onValueChange($event.target)"
+      (blur)="onTouched()"
+    />
+
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    @if (isError) {
+    <mat-error> A data de {{ labelText }} é obrigatória. </mat-error>
+    }
+  </mat-form-field>
+</div>

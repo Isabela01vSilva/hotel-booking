@@ -82,3 +82,17 @@
   color: gray;
 }
 
+/* campo data entrada e saida */
+.error-field.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #f44336 !important;
+  stroke: #f44336 !important;
+}
+
+.error-field .mat-form-field-label {
+  color: #f44336 !important;
+}
+
+.error-field input {
+  border-color: #f44336 !important;
+}
+

@@ -1,0 +1,71 @@
+<!-- HÓSPEDES -->
+  <div class="search-item border-left-custom">
+    <div class="label-row">
+      <i class="ph ph-users"></i>
+      <label for="hospedes">Hóspedes</label>
+    </div>
+
+    <mat-form-field appearance="outline" class="custom-input">
+      <input
+        matInput
+        [value]="getTotalPessoas()"
+        [matMenuTriggerFor]="menu"
+        #menuTrigger="matMenuTrigger"
+        readonly
+        id="hospedes"
+        formControlName="hospedes"
+      />
+    </mat-form-field>
+
+    <mat-menu #menu="matMenu" class="content-item">
+      <!-- Adultos -->
+      <div class="hosp-item">
+        <span>Adultos</span>
+        <div
+          class="content-btn d-flex align-items-center justify-content-between"
+        >
+          <button type="button" mat-mini-button (click)="decrement('adultos')">
+            −
+          </button>
+          <span>{{ tempAdultos }}</span>
+          <button
+            type="button"
+            mat-mini-button
+            (click)="increment('adultos'); $event.stopPropagation()"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Crianças -->
+      <div class="hosp-item">
+        <span>Crianças</span>
+        <div class="content-btn d-flex align-items-center justify-content-between">
+          <button
+            type="button"
+            mat-mini-button
+            (click)="decrement('criancas'); $event.stopPropagation()"
+          >
+            −
+          </button>
+          <span>{{ tempCriancas }}</span>
+          <button
+            type="button"
+            mat-mini-button
+            (click)="increment('criancas'); $event.stopPropagation()"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Ação -->
+      <div class="actions">
+        <app-button
+          textoBotao="Aplicar"
+          (click)="applySelection(menuTrigger)"
+        ></app-button>
+      </div>
+    </mat-menu>
+  </div>

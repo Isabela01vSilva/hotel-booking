@@ -26,7 +26,7 @@ export const routes: Routes = [
               { path: 'hotel/:id', component: DetailComponent },
             ],
           },
-          { path: 'checkout', component: CheckoutComponent },
+          { path: 'checkout/:hotelId/:roomName', component: CheckoutComponent },
         ],
       },
       { path: 'success', component: SucessComponent },

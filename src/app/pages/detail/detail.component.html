@@ -29,7 +29,7 @@
       <h3 class="available-rooms-title mt-4">Quartos Disponíveis</h3>
       <div>
         @for (room of hotel.rooms; track $index) {
-        <app-room-option [room]="room"></app-room-option>
+        <app-room-option [room]="room" [hotelId]="hotel.id"></app-room-option>
         }
       </div>
     </div>

@@ -9,15 +9,17 @@ import { findHotelsEffect } from './entity/state/hotel/hotel.effects';
 import { hotelReducer } from './entity/state/hotel/hotel.reducer';
 import { findSuggestionEffect } from './entity/state/suggestion/suggestions.effects';
 import { suggestionsReducer } from './entity/state/suggestion/suggestions.reducer';
+import { searchInputDataReducer } from './entity/state/search/search-input-data.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), // Angular 15+ forma moderna,,
+    provideRouter(routes),
     provideStore(appReducers),
     provideEffects({ findHotelsEffect, findSuggestionEffect }),
     provideState({ name: 'hotels', reducer: hotelReducer }),
     provideState({ name: 'suggestions', reducer: suggestionsReducer }),
+    provideState({ name: 'searchInputData', reducer: searchInputDataReducer }),
 ]
 };

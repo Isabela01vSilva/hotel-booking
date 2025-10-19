@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -14,19 +15,24 @@ import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
   styleUrl: './search.component.css',
 })
 export class SearchComponent implements OnInit {
-
-  hotelIds$: Observable<number[]> | undefined
+  hotelIds$: Observable<number[]> | undefined;
 
   @Output() deactivate = new EventEmitter<void>();
 
-  constructor(
-    private store: Store) {
+  sugestionName = "";
+  sugestionRegion = "";
+
+  constructor(private store: Store, private route: ActivatedRoute) {
+
   }
 
   ngOnInit(): void {
-    this.store.dispatch(hotelsActions.findHotels())
-    this.hotelIds$ = this.store.select(hotelsSelector)
-    this.deactivate.emit
+    this.store.dispatch(hotelsActions.findHotels());
+    this.hotelIds$ = this.store.select(hotelsSelector);
+    this.deactivate.emit;
+
+    this.sugestionName = this.route.snapshot.queryParamMap.get('sugestionName') ?? '';
+    this.sugestionRegion = this.route.snapshot.queryParamMap.get('sugestionRegion') ?? '';
+
   }
 }
-

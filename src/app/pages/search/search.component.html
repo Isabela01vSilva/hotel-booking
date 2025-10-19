@@ -1,9 +1,13 @@
 <div class="page-container">
-
   <div class="search-summary d-flex justify-content-between align-items-center">
     <div class="search-info">
-      <p><b class="location-title"> name </b> region </p>
-      <p class="hotel-count">{{ (hotelIds$  | async)!!.length }} hotéis encontrados</p>
+      <p>
+        <b class="location-title"> {{ sugestionName }} </b>
+        {{ sugestionRegion }}
+      </p>
+      <p class="hotel-count">
+        {{ (hotelIds$ | async)!!.length }} hotéis encontrados
+      </p>
     </div>
     <button class="filter-button" aria-label="Filtros">
       <i class="ph ph-faders-horizontal"></i>
@@ -12,7 +16,7 @@
 
   <div class="card-grid">
     @for (hotelId of (hotelIds$ | async); track $index) {
-      <app-card [hotelId]="hotelId" ></app-card>
+    <app-card [hotelId]="hotelId"></app-card>
     }
   </div>
 </div>

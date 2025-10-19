@@ -62,3 +62,15 @@
 .resumo-detalhes p {
   margin: 4px 0;
 }
+
+.campo-invalido {
+  border: 2px solid #e74c3c;
+  background-color: #fff5f5;
+}
+
+.erro {
+  color: #d9534f;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: block;
+}
