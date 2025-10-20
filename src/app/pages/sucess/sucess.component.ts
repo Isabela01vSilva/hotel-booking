@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sucess',
@@ -9,7 +8,9 @@ import { Router } from '@angular/router';
 })
 export class SucessComponent implements OnInit {
 
-  checkoutData: any;
+  checkoutData: any; /* colocar  o tipo aquiiiiii */
+
+  /* tenho que acessar a store do hotel para pegar o nome aquiaquuiaqui */
 
   ngOnInit() {
     const nav = history.state;

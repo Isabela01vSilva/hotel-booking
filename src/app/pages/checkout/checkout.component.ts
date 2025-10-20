@@ -2,7 +2,7 @@ import { searchInputData } from './../../entity/state/search/search-input-data.s
 import { Component, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../_components/button/button.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IRoom } from '../../entity/room.interface';
 import { IHotel } from '../../entity/hotel.interface';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,6 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
   FormGroup,
-  FormControl,
   FormBuilder,
   Validators,
 } from '@angular/forms';
@@ -53,6 +52,7 @@ export class CheckoutComponent implements OnInit {
     console.log('Hotel ID:', this.hotelId);
     this.hotel$ = this.store.select(hotelsByIdSelector(this.hotelId));
     this.searchInputData$ = this.store.select(searchInputData());
+
 
     this.checkoutForm = this.fb.group({
       nomeHospede: ['', Validators.required],

@@ -20,7 +20,7 @@ export class HeaderComponent {
     '/search',
     '/hotel/:id',
     '/detail',
-    '/checkout',
+    'checkout/:hotelId/:roomName',
   ];
 
   constructor(private router: Router) {
@@ -34,7 +34,6 @@ export class HeaderComponent {
       map((url) =>
         this.pagesWithHomeLink.some((page) => {
           if (page.includes(':id')) {
-            // Transforma '/hotel/:id' em regex /^\/hotel\/[^/]+$/
             const regex = new RegExp('^' + page.replace(':id', '[^/]+') + '$');
             return regex.test(url);
           }
@@ -42,7 +41,6 @@ export class HeaderComponent {
         })
       )
     );
-
     this.isWhiteBg$ = this.showHomeLink$;
   }
 
