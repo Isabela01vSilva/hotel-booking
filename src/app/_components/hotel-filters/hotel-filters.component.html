@@ -1,0 +1,61 @@
+<button class="filter-button" aria-label="Filtros" (click)="toggleFilters()">
+  <i class="ph ph-faders-horizontal"></i>
+</button>
+
+@if ( isOpen ) {
+
+<div class="filter-panel">
+  <div class="filter-header">
+    <h2>Filtros</h2>
+    <button (click)="clearFilters()" class="clear-btn">Limpar filtros</button>
+  </div>
+
+  <form>
+    <!-- Campo de hotel -->
+    <div class="filter-section">
+      <label for="hotelName">Hotel</label>
+      <input
+        id="hotelName"
+        type="text"
+        formControlName="hotelName"
+        placeholder="Nome do hotel"
+      />
+    </div>
+
+    <!-- Filtro de preço -->
+    <div class="filter-section">
+      <div class="filter-title" (click)="togglePrice()">
+        <span>Preço</span>
+        <span>{{ showPrice ? "▾" : "▸" }}</span>
+      </div>
+
+      <div *ngIf="showPrice" class="price-slider">
+        <div class="price-values">
+          <span>R$ {{ filterForm.get("minPrice")?.value }}</span>
+          <span>—</span>
+          <span>R$ {{ filterForm.get("maxPrice")?.value }}</span>
+        </div>
+        <input type="range" min="0" max="1200" formControlName="minPrice" />
+        <input type="range" min="0" max="1200" formControlName="maxPrice" />
+      </div>
+    </div>
+
+    <!-- Filtro de estrelas -->
+    <div class="filter-section">
+      <div class="filter-title" (click)="toggleStars()">
+        <span>Estrelas</span>
+        <span>{{ showStars ? "▾" : "▸" }}</span>
+      </div>
+
+      <div *ngIf="showStars" class="stars-list">
+        <label *ngFor="let s of stars">
+          <input type="checkbox" />
+          <!-- pode virar reactive também -->
+          {{ s.label }}
+          <span class="count">{{ s.count }}</span>
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+}
