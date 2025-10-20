@@ -1,35 +1,60 @@
-import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from '@angular/core';
-import { ButtonComponent } from "../../button/button.component";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  OnInit,
+} from '@angular/core';
+import { ButtonComponent } from '../../button/button.component';
 import { MatMenuTrigger, MatMenu } from '@angular/material/menu';
-import { MatFormField } from "@angular/material/form-field";
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatFormField } from '@angular/material/form-field';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-guest-input',
-  imports: [ButtonComponent, MatFormField, MatMenu, MatMenuTrigger],
+  imports: [ButtonComponent, MatFormField, MatMenu, ReactiveFormsModule, MatMenuTrigger],
   templateUrl: './guest-input.component.html',
   styleUrls: ['./guest-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => GuestInputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class GuestInputComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class GuestInputComponent implements ControlValueAccessor, OnInit {
 
   adultos = 2;
   criancas = 0;
   tempAdultos = this.adultos;
   tempCriancas = this.criancas;
+
+  value: { adultos: number, criancas: number} = { adultos: this.adultos, criancas: this.criancas };
+  onChange!: (value: { adultos: number, criancas: number}) => void;
+  onTouched!: () => void;
+
+  ngOnInit(): void {
+    /* this.onValueChange(); */
+  }
+
+  writeValue(value: { adultos: number, criancas: number}): void {
+    this.value = value;
+  }
+  registerOnChange(fn: (value: { adultos: number, criancas: number}) => void): void {
+    this.onChange = fn;
+  };
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  onValueChange() {
+    this.value = { adultos: this.adultos, criancas: this.criancas };
+    if (this.onChange) {
+      this.onChange(this.value);
+    }
+  }
 
   increment(tipo: 'adultos' | 'criancas') {
     if (tipo === 'adultos') {
@@ -50,6 +75,9 @@ export class GuestInputComponent implements OnInit {
   applySelection(menuTrigger: MatMenuTrigger) {
     this.adultos = this.tempAdultos;
     this.criancas = this.tempCriancas;
+
+    this.onValueChange();
+
     menuTrigger.closeMenu();
   }
 
@@ -62,5 +90,4 @@ export class GuestInputComponent implements OnInit {
     const quartoText = `, 1 Quarto`;
     return adultosText + criancasText + quartoText;
   }
-
 }

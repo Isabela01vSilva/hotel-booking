@@ -6,33 +6,36 @@ import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
 import { ActivatedRoute } from '@angular/router';
+import { HotelFiltersComponent } from "../../_components/hotel-filters/hotel-filters.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { ISearchInputData } from '../../entity/search-input-data.interface';
+import { searchInputData } from '../../entity/state/search/search-input-data.selectors';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CardComponent, AsyncPipe],
+  imports: [CardComponent, AsyncPipe, HotelFiltersComponent, ReactiveFormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
 export class SearchComponent implements OnInit {
+
   hotelIds$: Observable<number[]> | undefined;
+  searchInputData$!: Observable<ISearchInputData> | undefined;
 
   @Output() deactivate = new EventEmitter<void>();
 
   sugestionName = "";
   sugestionRegion = "";
 
-  constructor(private store: Store, private route: ActivatedRoute) {
-
-  }
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(hotelsActions.findHotels());
     this.hotelIds$ = this.store.select(hotelsSelector);
-    this.deactivate.emit;
 
-    this.sugestionName = this.route.snapshot.queryParamMap.get('sugestionName') ?? '';
-    this.sugestionRegion = this.route.snapshot.queryParamMap.get('sugestionRegion') ?? '';
-
+    this.searchInputData$ = this.store.select(
+      searchInputData()
+    )
   }
 }

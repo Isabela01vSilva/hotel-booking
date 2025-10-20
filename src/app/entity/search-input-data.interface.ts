@@ -1,6 +1,7 @@
 export interface ISearchInputData {
-  //destion: string;
+  destinationName: string;
+  region: string;
   dataentra: number;
   datasaida: number;
-  //qtdpessoas: number;
+  qtdpessoas: number;
 }

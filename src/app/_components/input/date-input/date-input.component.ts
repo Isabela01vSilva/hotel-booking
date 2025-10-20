@@ -1,44 +1,56 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
-import { MatDatepickerInput } from "@angular/material/datepicker";
-import { MatDatepickerToggle, MatDatepicker } from "@angular/material/datepicker";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from "@angular/material/input";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  Input,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import {
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-date-input',
-  imports: [MatDatepickerInput, MatDatepickerToggle, MatDatepicker, ReactiveFormsModule, MatInputModule],
+  standalone: true,
+  imports: [MatInputModule, MatDatepickerModule, ReactiveFormsModule],
   templateUrl: './date-input.component.html',
-  styleUrl: './date-input.component.css',
+  styleUrls: ['./date-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DateInputComponent),
-      multi: true
+      multi: true,
     }
-  ]
+  ],
 })
 export class DateInputComponent implements ControlValueAccessor {
   @Input() labelText: string = '';
-  @Input() isError: boolean = false;
+  @Input() isError!: boolean;
 
-  value: string = '';
-  onChange!: ((value: string) => void);
+  @Input() minDate: Date | null = null;
+  value: Date | null = null;
+  onChange!: (value: Date | null) => void;
+
   onTouched!: () => void;
 
-  onValueChange(eventTarget: EventTarget | null) {
-    console.log(this.isError)
-    this.value = eventTarget ? (eventTarget as HTMLInputElement).value : ''
-    if (this.onChange) {
-      this.onChange(this.value);
-    }
+  onValueChange(event: MatDatepickerInputEvent<Date>) {
+    const date = event.value ?? null;
+    this.value = date;
+    this.onChange?.(date);
   }
 
-  writeValue(value: string): void {
+  writeValue(value: Date): void {
     this.value = value;
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: Date | null) => void): void {
     this.onChange = fn;
   }
 
@@ -46,5 +58,3 @@ export class DateInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 }
-
-

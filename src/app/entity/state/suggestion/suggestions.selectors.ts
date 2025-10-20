@@ -12,3 +12,10 @@ export const suggestionByIdSelector = (suggestionId: number) => createSelector(
   selectSuggestionState,
   (state) => state.suggestions.find((suggestion) => suggestion.id === suggestionId) as ISuggestions
 )
+
+
+
+export const suggestionSelector = () => createSelector(
+  selectSuggestionState,
+  (state) => state.suggestions as ISuggestions[]
+)

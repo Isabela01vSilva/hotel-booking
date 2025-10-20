@@ -7,9 +7,10 @@
   <mat-form-field appearance="outline" [class.error-field]="isError">
     <input
       matInput
+      [min]="minDate"
       [matDatepicker]="picker"
       [value]="value"
-      (input)="onValueChange($event.target)"
+      (dateChange)="onValueChange($event)"
       (blur)="onTouched()"
     />
 

@@ -1,5 +1,5 @@
-import { searchInputData } from './../../entity/state/search/search-input-data.selectors';
 import { ISuggestions } from './../../entity/suggestions.interface';
+import { searchInputData } from './../../entity/state/search/search-input-data.selectors';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
@@ -23,23 +23,20 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 // RXJS
-import { Observable, combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { combineLatest, filter, map, Observable, startWith } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
-import { suggestionsActions } from '../../entity/state/suggestion/suggestions.actions';
-import { suggestionsSelector } from '../../entity/state/suggestion/suggestions.selectors';
 
 // Interfaces & Components
 import { ButtonComponent } from '../../_components/button/button.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { HomeComponent } from '../../pages/home/home.component';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { searchInputDataActions } from '../../entity/state/search/search-input-data.actions';
 import { ISearchInputData } from '../../entity/search-input-data.interface';
-import { DateInputComponent } from "../input/date-input/date-input.component";
-import IOption from '../input/destination-input/IOption';
-import { DestinationInputComponent } from '../input/destination-input/destination-input.component';
+import { DateInputComponent } from '../input/date-input/date-input.component';
+import { GuestInputComponent } from '../input/guest-input/guest-input.component';
+import { suggestionSelector } from '../../entity/state/suggestion/suggestions.selectors';
+import { suggestionsActions } from '../../entity/state/suggestion/suggestions.actions';
 
 @Component({
   selector: 'app-search-engine',
@@ -62,43 +59,88 @@ import { DestinationInputComponent } from '../input/destination-input/destinatio
     RouterLink,
     RouterOutlet,
     DateInputComponent,
-    DestinationInputComponent
-],
+    GuestInputComponent,
+  ],
   templateUrl: './search-engine.component.html',
   styleUrls: ['./search-engine.component.css'],
 })
 export class SearchEngineComponent implements OnInit {
-  /// ==============================
-  // NGRX - SALVAR DADOS DE PESQUISA
-  // ==============================
+  /*
+  (1) Agora tenho que passar a quantidade de adultos e crianças
+  data entrada e data saida tmb, na page de checkout
+
+  (2) Criar função de erro dos inputs, não passar para a proxima tela
+
+  (5) Limpar esse type
+
+   */
+
+  options$: Observable<ISuggestions[]> | undefined;
+
+  filteredOptions$: Observable<ISuggestions[]> | undefined;
+  suggestionControl = new FormControl<string | ISuggestions>(
+    {
+      id: 0,
+      name: '',
+      region: '',
+      type: '',
+    },
+    Validators.required
+  );
 
   form!: FormGroup;
-  searchInputData$!: Observable<ISearchInputData>;
-
   formSubmetido = false;
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  today: Date = new Date();
+  minSaida: Date | null = null;
+
+  searchInputData$!: Observable<ISearchInputData>;
+
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    this.store.dispatch(suggestionsActions.findSuggestions());
+  }
 
   ngOnInit() {
-    this.store.dispatch(suggestionsActions.findSuggestions());
-
-    this.filteredOptions$ = combineLatest([
-      this.myControl.valueChanges.pipe(startWith('')),
-      this.store.select(suggestionsSelector),
-    ]).pipe(
-      map(([value, suggestions]) => {
-        const nome = typeof value === 'string' ? value : value?.name;
-        return nome && nome.length > 0
-          ? this._filterSuggestions(suggestions, nome)
-          : [];
-      })
-    );
+    this.options$ = this.store.select(suggestionSelector());
 
     this.form = this.fb.group({
-      destino: [null, Validators.required],
       entrada: [null, Validators.required],
       saida: [null, Validators.required],
+      hospedes: [{ adultos: 2, criancas: 0 }, [Validators.required]],
     });
+
+    this.form.get('entrada')?.valueChanges.subscribe((entrada: Date | null) => {
+      this.minSaida = entrada;
+    });
+
+    this.form.addControl('suggestions', this.suggestionControl);
+
+    this.filteredOptions$ = combineLatest([
+      this.options$,
+      this.suggestionControl.valueChanges.pipe(startWith('')),
+    ]).pipe(
+      map(([options, value]) => {
+        const filterValue =
+          typeof value === 'string'
+            ? value.toLowerCase()
+            : value?.name.toLowerCase() || '';
+
+        const regionFilter =
+          typeof value === 'string'
+            ? value.toLowerCase()
+            : value?.region.toLowerCase() || '';
+
+        return options.filter(
+          (option) =>
+            option.name.toLowerCase().includes(filterValue) ||
+            option.name.toLowerCase().includes(regionFilter)
+        );
+      })
+    );
 
     this.searchInputData$ = this.store.select(searchInputData());
 
@@ -107,12 +149,18 @@ export class SearchEngineComponent implements OnInit {
     });
   }
 
-  pesquisar() {
+  displayFn(suggestion: ISuggestions): string {
+    return suggestion && suggestion.name ? suggestion.name : '';
+  }
 
+  pesquisar() {
     this.formSubmetido = true;
 
     const entrada = this.form.value.entrada;
     const saida = this.form.value.saida;
+    const name = this.form.value.suggestions.name;
+    const region = this.form.value.suggestions.region;
+    const guest = this.form.value.hospedes;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -124,62 +172,13 @@ export class SearchEngineComponent implements OnInit {
         searchInputData: {
           dataentra: entrada ? entrada.getTime() : '',
           datasaida: saida ? saida.getTime() : '',
+          destinationName: name + '',
+          region: region + '',
+          qtdpessoas: guest,
         },
       })
     );
-  }
 
-  // ==============================
-  // AUTOCOMPLETE - DESTINATÁRIO
-  // ==============================
-
-  trackById(index: number, item: ISuggestions): number {
-    return item.id;
-  }
-
-  myControl = new FormControl<ISuggestions>({
-    id: 0,
-    name: '',
-    region: '',
-    type: '',
-  });
-
-  filteredOptions$!: Observable<ISuggestions[]>;
-
-  displayFn(suggestion: ISuggestions): string {
-    return suggestion?.name ?? '';
-  }
-
-  private _filterSuggestions(
-    suggestions: ISuggestions[],
-    nome: string
-  ): ISuggestions[] {
-    const filterValue = nome.toLowerCase();
-    return suggestions.filter((s) =>
-      s.name.toLowerCase().includes(filterValue)
-    );
-  }
-
-
-get su() : Observable<IOption[]> {
-  return this.filteredOptions$.pipe(
-    map(options => options.map(fo => ({
-      id: fo.id,
-      name: fo.name,
-      region: fo.region
-    })))
-  );
-}
-
-
-  // ==============================
-  // LÓGICA DE ATIVAÇÃO
-  // ==============================
-
-  propriedadeHabilitada = true;
-
-  onActivate(component: any) {
-    this.propriedadeHabilitada = component instanceof HomeComponent;
-    console.log('habilitou: ' + this.propriedadeHabilitada);
+    this.router.navigate(['/search']);
   }
 }

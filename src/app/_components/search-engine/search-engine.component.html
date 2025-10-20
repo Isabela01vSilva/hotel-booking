@@ -1,48 +1,53 @@
-<form [formGroup]="form" class="search-box" (onsubmit)="pesquisar()">
-  <!-- Destino -->
-  @if (su | async; as sug) {
-  <app-destination-input
-    labelText="Destino"
-    [isError]="(form.get('destino')?.invalid && formSubmetido) == true"
-    [suggestionsList]="sug"
-    formControlName="destino"
-  ></app-destination-input>
-  }
+<form [formGroup]="form" class="search-box" (ngSubmit)="pesquisar()">
+  <!-- Destino --->
+  <mat-form-field class="example-full-width">
+    <mat-label>Suggestions</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="suggestionControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      @for (option of filteredOptions$ | async; track option) {
+      <mat-option [value]="option">
+        <div class="suggestion-name">
+          {{ option.name }}
+        </div>
+        <div class="suggestion-region">
+          {{ option.region }}
+        </div>
+      </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 
   <!-- ENTRADA -->
   <app-date-input
     labelText="Entrada"
-    [isError]="(form.get('entrada')?.invalid && formSubmetido) == true"
     formControlName="entrada"
-  >
-  </app-date-input>
+    [isError]="(form.get('entrada')?.invalid && formSubmetido) == true"
+    [minDate]="today"
+  />
 
   <!-- SAÍDA -->
   <app-date-input
     labelText="Saída"
     [isError]="(form.get('saida')?.invalid && formSubmetido) == true"
+    [minDate]="minSaida"
     formControlName="saida"
-  ></app-date-input>
+  />
 
   <!-- HÓSPEDES -->
-  <app-guest-input formControlName="hospedes"></app-guest-input>
+  <app-guest-input formControlName="hospedes" />
 
   <!-- BOTÃO DE PESQUISA -->
   <div class="search-item">
-    <app-button
-      textoBotao="Pesquisar"
-      class="btn-search"
-      type="submit"
-      routerLink="search"
-      [queryParams]="{
-        sugestionName: myControl.value?.name,
-        sugestionRegion: myControl.value?.region
-      }"
-    ></app-button>
+    <app-button textoBotao="Pesquisar" type="submit"  class="btn-search"></app-button>
   </div>
 </form>
 
 <!-- Roteador Angular -->
 <div>
-  <router-outlet (activate)="onActivate($event)"></router-outlet>
+  <router-outlet></router-outlet>
 </div>
