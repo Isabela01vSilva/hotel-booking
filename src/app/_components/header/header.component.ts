@@ -13,14 +13,13 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   showHomeLink$: Observable<boolean>;
-
   isWhiteBg$: Observable<boolean>;
 
   private readonly pagesWithHomeLink = [
     '/search',
     '/hotel/:id',
     '/detail',
-    'checkout/:hotelId/:roomName',
+    '/checkout/:hotelId/:roomName',
   ];
 
   constructor(private router: Router) {
@@ -33,14 +32,13 @@ export class HeaderComponent {
     this.showHomeLink$ = navigation$.pipe(
       map((url) =>
         this.pagesWithHomeLink.some((page) => {
-          if (page.includes(':id')) {
-            const regex = new RegExp('^' + page.replace(':id', '[^/]+') + '$');
-            return regex.test(url);
-          }
-          return page === url;
+          const regexString = '^' + page.replace(/:\w+/g, '[^/]+') + '$';
+          const regex = new RegExp(regexString);
+          return regex.test(url);
         })
       )
     );
+
     this.isWhiteBg$ = this.showHomeLink$;
   }
 
