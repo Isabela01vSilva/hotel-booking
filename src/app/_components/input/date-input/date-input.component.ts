@@ -32,8 +32,7 @@ import {
 })
 export class DateInputComponent implements ControlValueAccessor {
   @Input() labelText: string = '';
-  @Input() isError!: boolean;
-
+  
   @Input() minDate: Date | null = null;
   value: Date | null = null;
   onChange!: (value: Date | null) => void;

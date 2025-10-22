@@ -3,5 +3,6 @@ export interface ISearchInputData {
   region: string;
   dataentra: number;
   datasaida: number;
-  qtdpessoas: number;
+  qtdAdulto: number;
+  qtdCrianca: number;
 }

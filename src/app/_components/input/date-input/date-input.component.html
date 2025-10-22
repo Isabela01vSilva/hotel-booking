@@ -1,23 +1,22 @@
 <div class="search-item border-left-custom">
   <div class="label-row">
     <i class="ph ph-calendar-blank"></i>
-    <label for="{{ labelText }}">{{ labelText }}</label>
+    <label>{{ labelText }}</label>
   </div>
 
-  <mat-form-field appearance="outline" [class.error-field]="isError">
+  <div class="custom-date-input">
     <input
-      matInput
-      [min]="minDate"
+      type="text"
       [matDatepicker]="picker"
+      [min]="minDate"
       [value]="value"
+      (focus)="picker.open()"
       (dateChange)="onValueChange($event)"
       (blur)="onTouched()"
+      placeholder="dd/mm/yyyy"
+      class="date-input"
     />
 
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    @if (isError) {
-    <mat-error> A data de {{ labelText }} é obrigatória. </mat-error>
-    }
-  </mat-form-field>
+  </div>
 </div>

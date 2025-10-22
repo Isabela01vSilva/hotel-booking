@@ -1,53 +1,63 @@
 <form [formGroup]="form" class="search-box" (ngSubmit)="pesquisar()">
-  <!-- Destino --->
-  <mat-form-field class="example-full-width">
-    <mat-label>Suggestions</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="suggestionControl"
-      [matAutocomplete]="auto"
-    />
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      @for (option of filteredOptions$ | async; track option) {
+
+  <!-- Destino -->
+ <div class="destination-field">
+  <label>Destino</label>
+  <input
+    type="text"
+    matInput
+    formControlName="suggestion"
+    [matAutocomplete]="auto"
+    [class.campo-invalido]="botaoClicado && form.get('suggestion')?.invalid"
+  />
+
+  @if (botaoClicado && form.get('suggestion')?.invalid) {
+    <small class="erro">Preencha o destino.</small>
+  }
+
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    @for (option of filteredOptions$ | async; track option) {
       <mat-option [value]="option">
-        <div class="suggestion-name">
-          {{ option.name }}
-        </div>
-        <div class="suggestion-region">
-          {{ option.region }}
-        </div>
+        <div class="suggestion-name">{{ option.name }}</div>
+        <div class="suggestion-region">{{ option.region }}</div>
       </mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>
+    }
+  </mat-autocomplete>
+</div>
 
   <!-- ENTRADA -->
   <app-date-input
     labelText="Entrada"
     formControlName="entrada"
-    [isError]="(form.get('entrada')?.invalid && formSubmetido) == true"
     [minDate]="today"
+    [class.campo-invalido]="botaoClicado && form.get('entrada')?.invalid"
   />
+  @if (botaoClicado && form.get('entrada')?.invalid) {
+    <small class="erro">Preencha a data de entrada.</small>
+  }
 
   <!-- SAÍDA -->
   <app-date-input
     labelText="Saída"
-    [isError]="(form.get('saida')?.invalid && formSubmetido) == true"
     [minDate]="minSaida"
     formControlName="saida"
+    [class.campo-invalido]="botaoClicado && form.get('saida')?.invalid"
   />
+  @if (botaoClicado && form.get('saida')?.invalid) {
+    <small class="erro">Preencha a data de saída.</small>
+  }
 
   <!-- HÓSPEDES -->
-  <app-guest-input formControlName="hospedes" />
+  <app-guest-input
+    formControlName="hospedes"
+  />
 
-  <!-- BOTÃO DE PESQUISA -->
+  <!-- BOTÃO -->
   <div class="search-item">
-    <app-button textoBotao="Pesquisar" type="submit"  class="btn-search"></app-button>
+    <app-button textoBotao="Pesquisar" type="submit" class="btn-search"></app-button>
   </div>
 </form>
 
-<!-- Roteador Angular -->
 <div>
   <router-outlet></router-outlet>
 </div>

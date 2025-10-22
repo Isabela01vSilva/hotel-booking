@@ -1,5 +1,4 @@
-import { ISuggestions } from './../../entity/suggestions.interface';
-import { searchInputData } from './../../entity/state/search/search-input-data.selectors';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
@@ -8,35 +7,37 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 
 // Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatOptionModule } from '@angular/material/core';
+import {
+  MatOptionModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 // RXJS
-import { combineLatest, filter, map, Observable, startWith } from 'rxjs';
+import { combineLatest, map, Observable, startWith } from 'rxjs';
 
 // NGRX
 import { Store } from '@ngrx/store';
 
-// Interfaces & Components
+// Components & Interfaces
 import { ButtonComponent } from '../../_components/button/button.component';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { searchInputDataActions } from '../../entity/state/search/search-input-data.actions';
-import { ISearchInputData } from '../../entity/search-input-data.interface';
 import { DateInputComponent } from '../input/date-input/date-input.component';
 import { GuestInputComponent } from '../input/guest-input/guest-input.component';
+import { ISuggestions } from '../../entity/suggestions.interface';
+import { ISearchInputData } from '../../entity/search-input-data.interface';
 import { suggestionSelector } from '../../entity/state/suggestion/suggestions.selectors';
 import { suggestionsActions } from '../../entity/state/suggestion/suggestions.actions';
+import { searchInputData } from '../../entity/state/search/search-input-data.selectors';
+import { searchInputDataActions } from '../../entity/state/search/search-input-data.actions';
 
 @Component({
   selector: 'app-search-engine',
@@ -49,52 +50,35 @@ import { suggestionsActions } from '../../entity/state/suggestion/suggestions.ac
     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule,
-    MatButtonModule,
     MatAutocompleteModule,
+    MatButtonModule,
     MatIconModule,
     MatOptionModule,
     MatDatepickerModule,
     ButtonComponent,
-    RouterLink,
-    RouterOutlet,
     DateInputComponent,
     GuestInputComponent,
+    RouterOutlet,
   ],
   templateUrl: './search-engine.component.html',
   styleUrls: ['./search-engine.component.css'],
 })
 export class SearchEngineComponent implements OnInit {
-  /*
-  (1) Agora tenho que passar a quantidade de adultos e crianças
-  data entrada e data saida tmb, na page de checkout
-
-  (2) Criar função de erro dos inputs, não passar para a proxima tela
-
-  (5) Limpar esse type
-
-   */
-
-  options$: Observable<ISuggestions[]> | undefined;
-
-  filteredOptions$: Observable<ISuggestions[]> | undefined;
-  suggestionControl = new FormControl<string | ISuggestions>(
-    {
-      id: 0,
-      name: '',
-      region: '',
-      type: '',
-    },
-    Validators.required
-  );
+  options$!: Observable<ISuggestions[]>;
+  filteredOptions$!: Observable<ISuggestions[]>;
+  searchInputData$!: Observable<ISearchInputData>;
 
   form!: FormGroup;
   formSubmetido = false;
+  botaoClicado = false;
 
   today: Date = new Date();
   minSaida: Date | null = null;
 
-  searchInputData$!: Observable<ISearchInputData>;
+  suggestionControl = new FormControl<string | ISuggestions>(
+    { id: 0, name: '', region: '', type: '' },
+    Validators.required
+  );
 
   constructor(
     private store: Store,
@@ -110,71 +94,59 @@ export class SearchEngineComponent implements OnInit {
     this.form = this.fb.group({
       entrada: [null, Validators.required],
       saida: [null, Validators.required],
-      hospedes: [{ adultos: 2, criancas: 0 }, [Validators.required]],
+      hospedes: [{ adultos: 2, criancas: 0 }],
+      suggestion: ['', Validators.required],
     });
 
     this.form.get('entrada')?.valueChanges.subscribe((entrada: Date | null) => {
       this.minSaida = entrada;
     });
 
-    this.form.addControl('suggestions', this.suggestionControl);
-
     this.filteredOptions$ = combineLatest([
       this.options$,
-      this.suggestionControl.valueChanges.pipe(startWith('')),
+      this.form.get('suggestion')!.valueChanges.pipe(startWith('')),
     ]).pipe(
       map(([options, value]) => {
-        const filterValue =
+        const searchText =
           typeof value === 'string'
             ? value.toLowerCase()
-            : value?.name.toLowerCase() || '';
-
-        const regionFilter =
-          typeof value === 'string'
-            ? value.toLowerCase()
-            : value?.region.toLowerCase() || '';
+            : (value?.name || value?.region || '').toLowerCase();
 
         return options.filter(
           (option) =>
-            option.name.toLowerCase().includes(filterValue) ||
-            option.name.toLowerCase().includes(regionFilter)
+            option.name.toLowerCase().includes(searchText) ||
+            option.region.toLowerCase().includes(searchText)
         );
       })
     );
 
     this.searchInputData$ = this.store.select(searchInputData());
-
-    this.searchInputData$.subscribe((data) => {
-      console.log(data);
-    });
   }
 
-  displayFn(suggestion: ISuggestions): string {
-    return suggestion && suggestion.name ? suggestion.name : '';
+  displayFn(value: string | ISuggestions): string {
+    return typeof value === 'string' ? value : value?.name ?? '';
   }
 
   pesquisar() {
     this.formSubmetido = true;
-
-    const entrada = this.form.value.entrada;
-    const saida = this.form.value.saida;
-    const name = this.form.value.suggestions.name;
-    const region = this.form.value.suggestions.region;
-    const guest = this.form.value.hospedes;
+    this.botaoClicado = true;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
+    const { entrada, saida, adultos, criancas, suggestions } = this.form.value;
+
     this.store.dispatch(
       searchInputDataActions.saveSearchInputData({
         searchInputData: {
-          dataentra: entrada ? entrada.getTime() : '',
-          datasaida: saida ? saida.getTime() : '',
-          destinationName: name + '',
-          region: region + '',
-          qtdpessoas: guest,
+          dataentra: entrada?.getTime() || '',
+          datasaida: saida?.getTime() || '',
+          destinationName: suggestions?.name || '',
+          region: suggestions?.region || '',
+          qtdAdulto: adultos,
+          qtdCrianca: criancas
         },
       })
     );
