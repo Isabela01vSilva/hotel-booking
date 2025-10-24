@@ -1,8 +1,10 @@
 export interface ISearchInputData {
   destinationName: string;
   region: string;
-  dataentra: number;
-  datasaida: number;
-  qtdAdulto: number;
-  qtdCrianca: number;
+  checkInDate: number;
+  checkOutDate: number;
+  guest: {
+    adults: number;
+    children: number;
+  };
 }

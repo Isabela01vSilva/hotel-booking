@@ -1,5 +1,5 @@
 <h4 class="reserva-titulo">Finalize sua reserva!</h4>
-<form [formGroup]="checkoutForm" class="reserva-form" (ngSubmit)="pesquisar()">
+<form [formGroup]="checkoutForm" class="reserva-form" (ngSubmit)="submitForm()">
   @if (hotel$ | async; as hotel) {
   <div class="reserva-container">
     <div class="dados-reserva">
@@ -7,99 +7,112 @@
       <div class="bloco-dados">
         <p class="titulo">Hotel: {{ hotel.hotel.name }}</p>
 
-        <div class="linha-inputs">
-          <div class="campo-form">
-            <label for="nome">Nome (Hóspede)</label>
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              formControlName="nomeHospede"
-              [class.campo-invalido]="botaoClicado && checkoutForm.get('nomeHospede')?.invalid"
-            />
-            @if (botaoClicado && checkoutForm.get('nomeHospede')?.invalid) {
-            <small class="erro">Preencha o nome do hóspede.</small>
-            }
-          </div>
+        <!-- Nome dos Hospedes -->
+        <div formArrayName="guests">
+          @for (guest of guests.controls; track $index) {
+          <div class="linha-inputs" [formGroupName]="$index">
+            <div class="campo-form">
+              <label for="firstName">Nome (Hóspede {{ $index + 1 }})</label>
+              <input
+                type="text"
+                formControlName="firstName"
+                [class.campo-invalido]="isInvalid(guest.get('firstName'))"
+              />
+              @if (isInvalid(guest.get('firstName'))) {
+              <small class="erro">Preencha o nome do hóspede.</small>
+              }
+            </div>
 
-          <div class="campo-form">
-            <label for="sobrenome">Sobrenome</label>
-            <input
-              type="text"
-              id="sobrenome"
-              name="sobrenome"
-              formControlName="sobrenomeHospede"
-              [class.campo-invalido]="botaoClicado && checkoutForm.get('sobrenomeHospede')?.invalid"
-            />
-            @if (botaoClicado && checkoutForm.get('sobrenomeHospede')?.invalid){
-              <small class="erro">Informe o sobrenome do hóspede.</small>
-            }
+            <!-- sobrenome -->
+            <div class="campo-form">
+              <label for="lastName">Sobrenome</label>
+              <input
+                type="text"
+                formControlName="lastName"
+                [class.campo-invalido]="isInvalid(guest.get('lastName'))"
+              />
+              @if (isInvalid(guest.get('lastName'))) {
+              <small class="erro">Preencha o sobrenome do hóspede.</small>
+              }
+            </div>
           </div>
+          }
         </div>
       </div>
-      
+
       <!-- Dados de contato -->
       <div class="bloco-dados">
         <p class="titulo">Contato da reserva</p>
-
         <div class="linha-inputs">
           <div class="campo-form">
+            <!-- Nome de contato -->
             <label for="contato-nome">Nome</label>
             <input
               type="text"
               id="contato-nome"
               name="contato-nome"
               placeholder="Digite um nome"
-              formControlName="nomeContato"
-              [class.campo-invalido]="botaoClicado && checkoutForm.get('nomeContato')?.invalid"
-            />
-            @if (botaoClicado && checkoutForm.get('nomeHospede')?.invalid) {
-              <small class="erro">Preencha o nome do contato.</small>
-            }
-          </div>
-
-          <div class="campo-form">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Digite seu e-mail"
-              formControlName="emailContato"
+              formControlName="contactName"
               [class.campo-invalido]="
-                botaoClicado && checkoutForm.get('emailContato')?.invalid
+                isInvalid(checkoutForm.get('contactName'))
               "
             />
-            @if (botaoClicado &&
-            checkoutForm.get('emailContato')?.hasError('required')) {
-            <small class="erro">Informe um email de contato.</small>
+            @if (isInvalid(checkoutForm.get('contactName'))) {
+            <small class="erro">Preencha o nome do contato.</small>
             }
           </div>
 
+          <!-- Email -->
           <div class="campo-form">
-            <label for="telefone">Telefone (WhatsApp)</label>
+            <label for="contactEmail">Email</label>
+            <input
+              type="email"
+              id="contactEmail"
+              placeholder="Digite seu e-mail"
+              formControlName="contactEmail"
+              [class.campo-invalido]="
+                isInvalid(checkoutForm.get('contactEmail'))
+              "
+            />
+            @if (hasError('contactEmail', 'required')) {
+            <small class="erro">Informe um email de contato.</small>
+            } @if (hasError('contactEmail', 'email')) {
+            <small class="erro"
+              >Formato de e-mail inválido. Ex: nome&#64;dominio.com</small
+            >
+            }
+          </div>
+
+          <!-- Telefone -->
+          <div class="campo-form">
+            <label for="contactPhone">Telefone (WhatsApp)</label>
             <input
               type="tel"
-              id="telefone"
-              name="telefone"
+              id="contactPhone"
               placeholder="(XX) XXXXX-XXXX"
-              formControlName="telefoneContato"
-              [class.campo-invalido]="botaoClicado && checkoutForm.get('telefoneContato')?.invalid"
+              formControlName="contactPhone"
+              [class.campo-invalido]="
+                isInvalid(checkoutForm.get('contactPhone'))
+              "
             />
-            @if (botaoClicado && checkoutForm.get('telefoneContato')?.invalid) {
-              <small class="erro">Informe um telefone para contato.</small>
+            @if (hasError('contactPhone', 'required')) {
+            <small class="erro">Informe um telefone para contato.</small>
+            } @if (hasError('contactPhone', 'pattern')) {
+            <small class="erro"
+              >Formato inválido. Use o padrão (XX) XXXXX-XXXX.</small
+            >
             }
           </div>
         </div>
 
+        <!-- observação -->
         <div class="campo-form">
-          <label for="observacoes">Observações</label>
+          <label for="notes">Observações</label>
           <textarea
-            id="observacoes"
-            name="observacoes"
+            id="notes"
             rows="4"
             placeholder="Sua mensagem"
-            formControlName="observacoes"
+            formControlName="notes"
           ></textarea>
         </div>
       </div>
@@ -123,11 +136,15 @@
       <p class="resumo-quarto-status">Multa de cancelamento</p>
       }
 
+      <!-- Imposto + taxa -->
       <div class="resumo-valor">
-        <p>Imposto</p>
+        <p>Imposto e taxa</p>
         <p>
           {{
-            getRoomByName(hotel, roomName).price.amount * 0.03
+            getRoomByName(hotel, roomName).price.amount *
+              0.1 *
+              calculateStayDays(searchInputData$ | async) +
+              50
               | currency
                 : getRoomByName(hotel, roomName).price.currency
                 : "symbol"
@@ -135,40 +152,20 @@
         </p>
       </div>
 
-      <div class="resumo-valor">
-        <p>valor do quarto</p>
-        <p>
-          {{
-            getRoomByName(hotel, roomName).price.amount
-              | currency
-                : getRoomByName(hotel, roomName).price.currency
-                : "symbol"
-          }}
-        </p>
-      </div>
-
+      <!-- TOTAL -->
       <div class="resumo-total">
         <p>Total</p>
-        <p>Valor total</p>
-      </div>
-
-      <div *ngIf="searchInputData$ | async as data">
-        <p>
-          Data de entrada:
+        <h2>
           {{
-            data.dataentra
-              ? (data.dataentra | date : "dd/MM/yyyy")
-              : "Não selecionada"
+            (getRoomByName(hotel, roomName).price.amount +
+              getRoomByName(hotel, roomName).price.amount * 0.03) *
+              calculateStayDays(searchInputData$ | async) +
+              50
+              | currency
+                : getRoomByName(hotel, roomName).price.currency
+                : "symbol"
           }}
-        </p>
-        <p>
-          Data de saída:
-          {{
-            data.datasaida
-              ? (data.datasaida | date : "dd/MM/yyyy")
-              : "Não selecionada"
-          }}
-        </p>
+        </h2>
       </div>
       <app-button textoBotao="RESERVAR" type="submit"></app-button>
     </div>

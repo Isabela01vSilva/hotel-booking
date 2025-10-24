@@ -136,17 +136,19 @@ export class SearchEngineComponent implements OnInit {
       return;
     }
 
-    const { entrada, saida, adultos, criancas, suggestions } = this.form.value;
+    const { entrada, saida, hospedes, suggestion } = this.form.value;
 
     this.store.dispatch(
       searchInputDataActions.saveSearchInputData({
         searchInputData: {
-          dataentra: entrada?.getTime() || '',
-          datasaida: saida?.getTime() || '',
-          destinationName: suggestions?.name || '',
-          region: suggestions?.region || '',
-          qtdAdulto: adultos,
-          qtdCrianca: criancas
+          checkInDate: entrada?.getTime() || 0,
+          checkOutDate: saida?.getTime() || 0,
+          destinationName: suggestion?.name || '',
+          region: suggestion?.region || '',
+          guest: {
+            adults: hospedes.adultos,
+            children: hospedes.criancas,
+          },
         },
       })
     );
