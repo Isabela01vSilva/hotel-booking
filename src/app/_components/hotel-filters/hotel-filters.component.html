@@ -1,60 +1,96 @@
-<button class="filter-button" aria-label="Filtros" (click)="toggleFilters()">
+<button
+  class="filter-button"
+  aria-label="Filtros"
+  (click)="toggleFilters($event)"
+>
   <i class="ph ph-faders-horizontal"></i>
 </button>
 
-@if ( isOpen ) {
-
-<div class="filter-panel">
+@if (showFilters) {
+<div class="filter-panel" (click)="$event.stopPropagation()">
   <div class="filter-header">
-    <h2>Filtros</h2>
-    <button (click)="clearFilters()" class="clear-btn">Limpar filtros</button>
+    <h3>Filtros</h3>
+    <div>
+      <i class="ph ph-trash"></i>
+      <button class="clear-btn" (click)="clear()">Limpar filtros</button>
+    </div>
   </div>
 
-  <form>
-    <!-- Campo de hotel -->
+  <form [formGroup]="filterForm">
+    <!-- HOTEL -->
     <div class="filter-section">
-      <label for="hotelName">Hotel</label>
+      <label for="nameHotel">Hotel</label>
       <input
         id="hotelName"
         type="text"
-        formControlName="hotelName"
         placeholder="Nome do hotel"
+        formControlName="nameHotel"
       />
     </div>
 
-    <!-- Filtro de preço -->
+    <!-- PREÇO -->
     <div class="filter-section">
       <div class="filter-title" (click)="togglePrice()">
-        <span>Preço</span>
-        <span>{{ showPrice ? "▾" : "▸" }}</span>
+        <p>Preço</p>
+        <span>
+          @if (showPrice) {
+          <i class="ph ph-caret-down"></i>
+          } @else {
+          <i class="ph ph-caret-up"></i>
+          }
+        </span>
       </div>
 
-      <div *ngIf="showPrice" class="price-slider">
+      <!-- Conteúdo do preço -->
+      @if (!showPrice) {
+      <div class="price-content">
         <div class="price-values">
           <span>R$ {{ filterForm.get("minPrice")?.value }}</span>
           <span>—</span>
           <span>R$ {{ filterForm.get("maxPrice")?.value }}</span>
         </div>
-        <input type="range" min="0" max="1200" formControlName="minPrice" />
-        <input type="range" min="0" max="1200" formControlName="maxPrice" />
+
+        <div class="mat-slider-wrapper">
+          <mat-slider min="0" max="1200">
+            <input matSliderStartThumb formControlName="minPrice" />
+            <input matSliderEndThumb formControlName="maxPrice" />
+          </mat-slider>
+        </div>
       </div>
+      }
     </div>
 
-    <!-- Filtro de estrelas -->
+    <!-- Estrelas -->
     <div class="filter-section">
-      <div class="filter-title" (click)="toggleStars()">
-        <span>Estrelas</span>
-        <span>{{ showStars ? "▾" : "▸" }}</span>
+      <div class="filter-title" (click)="toggleStar()">
+        <p>Estrelas</p>
+        <span>
+          @if (showStars) {
+          <i class="ph ph-caret-down"></i>
+          } @else {
+          <i class="ph ph-caret-up"></i>
+          }
+        </span>
       </div>
 
-      <div *ngIf="showStars" class="stars-list">
-        <label *ngFor="let s of stars">
-          <input type="checkbox" />
-          <!-- pode virar reactive também -->
-          {{ s.label }}
-          <span class="count">{{ s.count }}</span>
+      @if (!showStars) {
+      <div class="checkout-list">
+        @for (entry of (hotelStars$ | async) | keyvalue; track entry.key){ @if
+        (entry.key == "0") {
+        <label>
+          <input type="checkbox" [value]="entry.key" />
+          Não classificado
+          <span>H: {{ entry.value }}</span>
         </label>
+        } @else {
+        <label>
+          <input type="checkbox" [value]="entry.key" />
+          {{ entry.key }} estrelas
+          <span>H: {{ entry.value }}</span>
+        </label>
+        } }
       </div>
+      }
     </div>
   </form>
 </div>

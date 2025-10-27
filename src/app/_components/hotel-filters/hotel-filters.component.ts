@@ -1,57 +1,85 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
+import { map, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { IHotel } from '../../entity/hotel.interface';
+import { hotelsByStarsSelector, hotelsSelector } from '../../entity/state/hotel/hotel.selectors';
+import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
+
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hotel-filters',
   templateUrl: './hotel-filters.component.html',
-  styleUrls: ['./hotel-filters.component.css']
+  styleUrls: ['./hotel-filters.component.css'],
+  imports: [MatSliderModule, ReactiveFormsModule, CommonModule],
 })
-export class HotelFiltersComponent {
-  isOpen = false;
-  showPrice = true;
-  showStars = true;
+export class HotelFiltersComponent implements OnInit {
+  hotelStars$!: Observable<Record<number, number>>;
 
-  filterForm!: FormGroup;
+  showFilters = false;
+  showPrice = false;
+  showStars = false;
 
-  stars = [
-    { label: '1 estrela', checked: false, count: 28 },
-    { label: '2 estrelas', checked: false, count: '99+' },
-    { label: '3 estrelas', checked: false, count: '99+' },
-    { label: '4 estrelas', checked: false, count: 11 },
-    { label: '5 estrelas', checked: false, count: 2 },
-    { label: 'Não classificado', checked: false, count: 17 }
-  ];
+  stars = [1, 2, 3, 4, 5];
+  selectedStars: number[] = [];
 
-  constructor(private fb: FormBuilder) {
+  filterForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private store: Store) {
     this.filterForm = this.fb.group({
-      hotelName: [''],
+      nameHotel: [''],
       minPrice: [0],
-      maxPrice: [1200]
+      maxPrice: [1200],
     });
+
+    this.hotelStars$ = this.store.select(hotelsByStarsSelector);
   }
 
-  // Abre/fecha o painel
-  toggleFilters() {
-    this.isOpen = !this.isOpen;
+  ngOnInit(): void {
+    this.store.dispatch(hotelsActions.findHotels());
   }
 
-  // Mostra/oculta o bloco de preço
-  togglePrice() {
+  toggleFilters(event?: MouseEvent): void {
+    event?.stopPropagation();
+    this.showFilters = !this.showFilters;
+  }
+
+  togglePrice(): void {
     this.showPrice = !this.showPrice;
   }
 
-  // Mostra/oculta o bloco de estrelas
-  toggleStars() {
+  toggleStar(): void {
     this.showStars = !this.showStars;
   }
 
-  // Limpa todos os filtros
-  clearFilters() {
+  onStarChange(star: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      this.selectedStars.push(star);
+    } else {
+      this.selectedStars = this.selectedStars.filter((s) => s !== star);
+    }
+  }
+
+  clear(){
     this.filterForm.reset({
-      hotelName: '',
-      minPrice: 0,
-      maxPrice: 1200
-    });
-    this.stars.forEach(s => (s.checked = false));
+    nameHotel: '',
+    minPrice: 0,
+    maxPrice: 1200,
+  });
+
+  // Limpa seleção de estrelas
+  this.selectedStars = [];
+  }
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    if (this.showFilters) {
+      this.showFilters = false;
+    }
   }
 }
