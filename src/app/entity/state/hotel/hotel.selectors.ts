@@ -16,13 +16,13 @@ export const hotelsByIdSelector = (hotelId: number) =>
 
 export const hotelsByStarsSelector = createSelector(
   selectHotelState,
-  (state: HotelState): Record<number, number> => {
+  (state: HotelState): [number, number][] => {
     const starRecord: Record<number, number> = {
-      5: 0,
-      4: 0,
-      3: 0,
-      2: 0,
       1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
       0: 0,
     };
 
@@ -31,6 +31,11 @@ export const hotelsByStarsSelector = createSelector(
       starRecord[stars] = (starRecord[stars] || 0) + 1;
     });
 
-    return starRecord;
+    const orderedArray: [number, number][] = [];
+    [1, 2, 3, 4, 5, 0].forEach((key) => {
+      orderedArray.push([key, starRecord[key]]);
+    });
+
+    return orderedArray;
   }
 );

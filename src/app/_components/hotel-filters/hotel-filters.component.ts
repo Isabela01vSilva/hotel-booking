@@ -1,11 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IHotel } from '../../entity/hotel.interface';
-import { hotelsByStarsSelector, hotelsSelector } from '../../entity/state/hotel/hotel.selectors';
+import { hotelsByStarsSelector } from '../../entity/state/hotel/hotel.selectors';
 import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
 
 import { CommonModule } from '@angular/common';
@@ -17,14 +16,8 @@ import { CommonModule } from '@angular/common';
   imports: [MatSliderModule, ReactiveFormsModule, CommonModule],
 })
 export class HotelFiltersComponent implements OnInit {
-  hotelStars$!: Observable<Record<number, number>>;
 
-  showFilters = false;
-  showPrice = false;
-  showStars = false;
-
-  stars = [1, 2, 3, 4, 5];
-  selectedStars: number[] = [];
+  hotelStars$!: Observable<[number, number][]>;
 
   filterForm: FormGroup;
 
@@ -42,44 +35,42 @@ export class HotelFiltersComponent implements OnInit {
     this.store.dispatch(hotelsActions.findHotels());
   }
 
-  toggleFilters(event?: MouseEvent): void {
+  toggles: Record<string, boolean> = {
+    filters: false,
+    price: true,
+    stars: true,
+  };
+
+  toggle(section: string, event?: MouseEvent): void {
     event?.stopPropagation();
-    this.showFilters = !this.showFilters;
+    this.toggles[section] = !this.toggles[section];
   }
 
-  togglePrice(): void {
-    this.showPrice = !this.showPrice;
+  isOpen(section: string): boolean {
+    return !!this.toggles[section];
   }
 
-  toggleStar(): void {
-    this.showStars = !this.showStars;
+  getToggleIcon(section: string): string {
+    return this.isOpen(section) ? 'ph ph-caret-down' : 'ph ph-caret-up';
   }
 
-  onStarChange(star: number, event: Event): void {
-    const checked = (event.target as HTMLInputElement).checked;
-
-    if (checked) {
-      this.selectedStars.push(star);
-    } else {
-      this.selectedStars = this.selectedStars.filter((s) => s !== star);
-    }
-  }
-
-  clear(){
+  clear() {
     this.filterForm.reset({
-    nameHotel: '',
-    minPrice: 0,
-    maxPrice: 1200,
-  });
+      nameHotel: '',
+      minPrice: 0,
+      maxPrice: 1200,
+    });
 
-  // Limpa seleção de estrelas
-  this.selectedStars = [];
+    const checkboxes = document.querySelectorAll(
+      '.checkout-list input[type="checkbox"]'
+    );
+    checkboxes.forEach((checkbox: any) => (checkbox.checked = false));
   }
 
   @HostListener('document:click')
   onDocumentClick(): void {
-    if (this.showFilters) {
-      this.showFilters = false;
+    if (this.isOpen('filters')) {
+      this.toggles['filters'] = false;
     }
   }
 }

@@ -1,71 +1,197 @@
-.filter-button {
-  background: #ffffff;
-  border: 1px solid #d9e0e6;
-  border-radius: 50%;
-  padding: 8px;
-  cursor: pointer;
-  font-size: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
+.filter-container {
+  position: relative;
+  display: inline-block;
+}
+/* btn Filter */
+.filter-button {
+  width: 49px;
+  height: 38px;
+  background-color: transparent;
+  border: 1px solid #0080ff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.filter-button i {
+  color: #0080ff;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-block;
+  transform: rotate(90deg);
+}
+/* Filter */
 .filter-panel {
   position: absolute;
-  top: 60px;
   right: 0;
-  background: #fff;
+  width: 234px;
+  height: 455px;
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  width: 260px;
   padding: 16px;
   z-index: 100;
+  color: #242424;
 }
-
+/* Header Filter*/
 .filter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  height: 24px;
 }
-
-.clear-btn {
-  background: none;
-  border: none;
-  color: #007bff;
+.filter-header p {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  font-family: 'Titillium Web', sans-serif;
+}
+.filter-actions {
   cursor: pointer;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
-
+.filter-actions i,
+.filter-actions .clear-btn {
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+}
+.filter-actions i {
+  color: #1877f2;
+}
+.filter-actions .clear-btn {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0;
+  background: none;
+  color: #1877f2;
+  border: none;
+  padding: 0;
+  font-family: 'Titillium Web', sans-serif;
+}
+/* Sections */
 .filter-section {
-  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+  gap: 5px;
 }
-
+/* Titulos */
 .filter-title {
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
+  padding: 5px 0px;
+}
+.filter-title p {
   font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0;
+  margin: 0;
+  font-family: 'Titillium Web', sans-serif;
+}
+.filter-title i {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* HR */
+hr {
+  width: 100%;
+  border-top: 1px solid #d3d3d3;
+  opacity: 1;
+  margin: 0;
 }
 
+/* Hotel */
+.nameHotel {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  font-family: 'Titillium Web', sans-serif;
+}
+.hotelName {
+  background: #ffffff;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 16px;
+  box-sizing: border-box;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+/* Preço */
 .price-values {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+.price-number {
+  flex: 1;
+}
+.min-price {
+  text-align: left;
+}
+.max-price {
+  text-align: right;
+}
+.divider {
+  flex: 0;
+  margin: 0 8px;
+  text-align: center;
+}
+mat-slider {
+  width: 90%;
+  --mdc-slider-handle-color: #0080ff;
+  --mdc-slider-active-track-color: #0080ff;
+  --mdc-slider-inactive-track-color: #d3d3d3;
+  --mdc-slider-value-indicator-color: #0080ff;
+}
+/* Estrelas */
+.checkout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.checkbox-text {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 0px;
 }
 
-.stars-list label {
+.checkout-list input[type="checkbox"] {
+  accent-color: #1877f2;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #d3d3d3;
+  background-color: #ffffff;
+}
+.star-item {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 4px;
+  align-items: center;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
 }
-
-.count {
-  color: #6b7280;
-  font-weight: 500;
+.star-count {
+  font-weight: bold;
 }
-
-/* porcentagem */
-mat-slider {
-  width: 200px;
-}
-
