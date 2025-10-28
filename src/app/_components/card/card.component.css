@@ -1,47 +1,83 @@
 .card {
+  width: 397px;
+  height: 350px;
+  background-color: #ffffff;
+  border-radius: 14px;
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
-
+/* Imagem */
 .card-image-wrapper {
   position: relative;
   display: inline-block;
   width: 100%;
-  border-radius: 8px;
+  height: 265px;
+  border-radius: 14px;
   overflow: hidden;
 }
-
 .card-image {
   display: block;
   width: 100%;
-  border-radius: 8px;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
 }
-
+.card-image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #0080ff0f;
+  box-shadow: 0 -68px 76px #0080ff59 inset;
+  z-index: 2;
+}
+/* Preço */
 .card-price {
   position: absolute;
   bottom: 8px;
   left: 12px;
-  color: white;
-  z-index: 2;
+  z-index: 3;
+}
+.card-price b {
+  font-size: 27px;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #ffffff;
+}
+.card-price span {
+  color: #e3ebf3;
+  font-size: 15px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+/* Informações */
+.card-info {
+  margin: 15px;
+}
+.hotel-name {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #00264d;
+}
+.card-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.card-content {
-  margin-top: 15px;
+.card-actions ::ng-deep app-button button {
+  height: 28px;
+}
+
+/* Estrelas */
+.card-stars {
+  display: flex;
+  flex-direction: row;
   gap: 10px;
 }
 
-.star-row {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 4px;
-}
-
 .star-icon {
-  color: gold;
+  color: #F2BF09;
+  font-size: 15px;
 }
-
-  /* @media(){
-     d-flex justify-content-between
-  } */

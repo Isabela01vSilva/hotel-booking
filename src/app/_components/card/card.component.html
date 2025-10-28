@@ -1,23 +1,26 @@
 @if (hotel$ | async; as hotel) {
 <div class="card">
   <div class="card-image-wrapper">
-    <img src="{{ hotel.hotel.image }}" class="card-image" alt="Hotel" />
-    <span class="card-price"
-      ><b>{{ hotel.lowestPrice.currency }} {{ hotel.lowestPrice.amount }}</b
-      >/ noite</span
-    >
+    <img class="card-image" [src]="hotel.hotel.image" alt="Hotel" />
+    <p class="card-price">
+      <b>{{
+        hotel.lowestPrice.amount
+          | currency : hotel.lowestPrice.currency : "symbol"
+      }}</b>
+      <span>/ noite</span>
+    </p>
   </div>
-  <div class="card-content">
-    <div class="card-header">
-      <b class="hotel-name">{{ hotel.hotel.name }}</b>
-      <div class="star-row">
+  <div class="card-info">
+    <b class="hotel-name">{{ hotel.hotel.name }}</b>
+    <div class="card-summary">
+      <div class="card-stars">
         @for (s of getStarsArray(hotel.hotel.stars); track $index) {
         <i class="ph-fill ph-star star-icon"></i>
         }
       </div>
-    </div>
-    <div class="card-actions">
-      <app-button textoBotao="Ver mais" (click)="pesquisar()"></app-button>
+      <div class="card-actions">
+        <app-button textBtn="Ver mais" (click)="search()"></app-button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,35 +1,32 @@
-<div class="room-card d-flex justify-content-between align-items-end">
+<div class="room-card">
   <div class="room-info">
-    <h2 class="room-title">{{ room.roomType.name }}</h2>
+    <span class="room-title">{{ room.roomType.name }}</span>
 
     @if (room.cancellationPolicies.refundable) {
-    <p class="room-cancellation">
-      <i class="ph ph-check-circle"></i>
+    <div class="room-cancellation">
+      <i class="ph-bold ph-check-circle"></i>
       Cancelamento gratuito
-    </p>
+    </div>
     } @else {
-    <p class="room-cancellation">
-      <i class="ph ph-x-circle"></i>
+    <div class="room-cancellation penalty">
+      <i class="ph-bold ph-x-circle penalty"></i>
       Multa de cancelamento
-    </p>
+    </div>
     }
   </div>
 
-  <div class="room-booking d-flex justify-content-between g-4">
+  <div class="room-booking">
     <div class="room-price-info">
-      <p class="room-price">
-        <strong>{{
+      <span class="room-price">
+        <b>{{
           room.price.amount | currency : room.price.currency : "symbol"
-        }}</strong>
+        }}</b>
         / noite
-      </p>
-      <p class="room-payment">Pagamento no hotel</p>
+      </span>
+      <span class="room-payment">Pagamento no hotel</span>
     </div>
     <div class="room-btn">
-      <app-button
-        textoBotao="Reservar Agora"
-        (click)="pesquisar()"
-      ></app-button>
+      <app-button textBtn="Reservar Agora" (click)="search()"></app-button>
     </div>
   </div>
 </div>

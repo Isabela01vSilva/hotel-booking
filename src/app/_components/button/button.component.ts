@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './button.component.css'
 })
 export class ButtonComponent {
-  @Input() textoBotao: string = '';
+  @Input() textBtn: string = '';
   @Input() type: 'button' | 'submit' = 'button';
 }

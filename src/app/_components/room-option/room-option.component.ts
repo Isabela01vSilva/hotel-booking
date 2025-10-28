@@ -21,7 +21,7 @@ export class RoomOptionComponent {
 
   ngOnInit(): void {}
 
-  pesquisar() {
+  search() {
     this.router.navigate(['/checkout', this.hotelId, this.room.roomType.name])
   }
 }

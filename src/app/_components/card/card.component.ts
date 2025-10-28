@@ -10,10 +10,11 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { hotelsByIdSelector } from '../../entity/state/hotel/hotel.selectors';
 import { AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-card',
-  imports: [ButtonComponent, AsyncPipe],
+  imports: [ButtonComponent, AsyncPipe, CommonModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css',
 })
@@ -25,7 +26,6 @@ export class CardComponent implements OnInit {
 
   constructor(private router: Router, private store: Store) {}
 
-  // Método para criar um array de forma segura
   getStarsArray(n: number | undefined): number[] {
     if (n === undefined || n <= 0) {
       return [];
@@ -37,7 +37,7 @@ export class CardComponent implements OnInit {
     this.hotel$ = this.store.select(hotelsByIdSelector(this.hotelId));
   }
 
-  pesquisar() {
+  search() {
     this.router.navigate(['/hotel', this.hotelId]);
   }
 }

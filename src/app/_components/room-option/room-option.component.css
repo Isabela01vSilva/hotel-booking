@@ -1,6 +1,58 @@
 .room-card {
-  padding: 16px;
-  border: 1px solid #E3E6E9;
-  border-radius: 8px;
-  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: none;
+  border-radius: 14px;
+  background-color: #e3ebf3;
+  height: 88px;
+}
+
+.room-title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 0%;
+  color: #00264d;
+}
+
+.room-cancellation {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #0080ff;
+  font-weight: 600;
+}
+.penalty {
+  color: #ff0000;
+}
+/*  */
+.room-booking{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-price {
+  color: #0080ff;
+  font-size: 15px;
+  display: flex;
+}
+.room-price b {
+  font-weight: 600;
+  font-size: 27px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+.room-payment {
+  color: #bfccd9;
+  font-size: 12px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+.room-btn ::ng-deep app-button button {
+  height: 38px;
+  width: 131px;
 }
