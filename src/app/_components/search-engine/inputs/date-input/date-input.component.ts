@@ -14,29 +14,33 @@ import {
   MatDatepickerInputEvent,
   MatDatepickerModule,
 } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-date-input',
   standalone: true,
-  imports: [MatInputModule, MatDatepickerModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatNativeDateModule],
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    provideNativeDateAdapter(),
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DateInputComponent),
       multi: true,
-    }
+    },
   ],
 })
 export class DateInputComponent implements ControlValueAccessor {
   @Input() labelText: string = '';
-  
-  @Input() minDate: Date | null = null;
-  value: Date | null = null;
-  onChange!: (value: Date | null) => void;
 
+  @Input() minDate: Date = new Date();
+
+  value: Date | null = null;
+
+  onChange!: (value: Date | null) => void;
   onTouched!: () => void;
 
   onValueChange(event: MatDatepickerInputEvent<Date>) {

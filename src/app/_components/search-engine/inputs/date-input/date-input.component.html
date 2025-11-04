@@ -1,0 +1,19 @@
+<div class="label-row">
+  <i class="ph ph-calendar-blank"></i>
+  <label>{{ labelText }}</label>
+</div>
+
+<div class="custom-data-input">
+  <input
+    type="text"
+    [matDatepicker]="picker"
+    [min]="minDate"
+    [value]="value"
+    (focus)="picker.open()"
+    (dateChange)="onValueChange($event)"
+    (blur)="onTouched()"
+    class="date-input"
+  />
+
+  <mat-datepicker #picker></mat-datepicker>
+</div>

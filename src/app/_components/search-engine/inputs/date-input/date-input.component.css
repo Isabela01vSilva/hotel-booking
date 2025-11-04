@@ -1,0 +1,68 @@
+/* LABEL SECTION */
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label-row i {
+  font-size: 18px;
+  color: #0080ff;
+}
+
+.label-row label {
+  color: #76899e;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+/* INPUT FIELD */
+.date-input {
+  border: none;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 26px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.date-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* CALENDAR */
+::ng-deep .mat-datepicker-content {
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  margin-top: 10px;
+  box-shadow: 0 0 9px 0 #00000017 !important;
+}
+
+::ng-deep .mat-calendar-header {
+  border-top: 5px solid #0080ff;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+::ng-deep .mat-calendar-table thead {
+  display: none;
+}
+
+::ng-deep .mat-calendar-body-label {
+  visibility: hidden;
+}
+
+::ng-deep .mat-calendar-body-cell .mat-calendar-body-cell-content:hover {
+  background-color: #0080ff!important;
+  color: #ffffff !important;
+  border-radius: 50%;
+  border: none;
+}
+
+::ng-deep .mat-calendar-body-today {
+  background-color: #ffffff !important;
+  border: 1px solid #0080ff !important;
+  border-radius: 50%;
+}
