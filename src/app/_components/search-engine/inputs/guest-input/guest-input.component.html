@@ -1,0 +1,72 @@
+<div class="label-row">
+  <i class="ph ph-users"></i>
+  <label for="guests">Hóspedes</label>
+</div>
+
+<input
+  matInput
+  [value]="getTotalGuests()"
+  [matMenuTriggerFor]="menu"
+  #menuTrigger="matMenuTrigger"
+  readonly
+  id="guests"
+  aria-label="Guest selector"
+  (input)="onValueChange()"
+  class="guest-input"
+/>
+
+<mat-menu #menu="matMenu" class="menu-item">
+  <div class="content-item">
+    <!-- Adults -->
+    <div class="guest-item">
+      <span>Adultos</span>
+      <div class="content-btn">
+        <button
+          type="button"
+          mat-mini-button
+          (click)="decrement('adults'); $event.stopPropagation()"
+        >
+          <span>-</span>
+        </button>
+        <span>{{ adultsCount }}</span>
+        <button
+          type="button"
+          mat-mini-button
+          (click)="increment('adults'); $event.stopPropagation()"
+        >
+          <span>+</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Children -->
+    <div class="guest-item">
+      <span>Crianças</span>
+      <div class="content-btn">
+        <button
+          type="button"
+          mat-mini-button
+          (click)="decrement('children'); $event.stopPropagation()"
+        >
+          <span>-</span>
+        </button>
+        <span>{{ childrenCount }}</span>
+        <button
+          type="button"
+          mat-mini-button
+          (click)="increment('children'); $event.stopPropagation()"
+        >
+          <span>+</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Apply button -->
+    <div class="actions">
+      <app-button
+        textBtn="Aplicar"
+        (click)="applySelection(menuTrigger)"
+      ></app-button>
+    </div>
+  </div>
+</mat-menu>

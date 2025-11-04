@@ -1,0 +1,128 @@
+/* LABEL SECTION */
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label-row i {
+  font-size: 18px;
+  color: #0080ff;
+}
+
+.label-row label {
+  color: #76899e;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+/* INPUT FIELD */
+.guest-input {
+  border: none;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 26px;
+  width: 100%;
+  cursor: pointer;
+}
+.guest-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* MENU CONTAINER */
+::ng-deep .menu-item {
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  margin-top: 10px;
+  box-shadow: 0 0 9px 0 #00000017;
+  width: 177px;
+  height: 159px;
+}
+
+/* MENU CONTENT */
+.content-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0 10px;
+}
+
+/* Each group (Adults / Children) */
+.guest-item {
+  border-bottom: 1px solid #e3ebf3;
+}
+
+.guest-item span {
+  color: #00264d;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+/* BUTTONS FOR + / - */
+.content-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0px;
+}
+
+.content-btn button {
+  border-radius: 20px;
+  border: none;
+  background-color: #e3ebf3;
+  width: 15px;
+  height: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-btn button span {
+  color: #698096;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 20px;
+}
+
+.content-btn span {
+  font-weight: 600;
+  font-size: 10px;
+  color: #000000;
+  line-height: 20px;
+}
+
+/* ACTION BUTTON ("APPLY") */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.actions ::ng-deep app-button button {
+  box-shadow: none;
+  border: 1px solid #0080ff;
+  background-color: #ffffff;
+  color: #0080ff;
+  width: 59px;
+  height: 19px;
+  border-radius: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 26px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.actions ::ng-deep app-button button:hover {
+  background-color: #0080ff;
+  color: #ffffff;
+}
