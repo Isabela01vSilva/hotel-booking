@@ -1,0 +1,35 @@
+<div class="label-row">
+  <i class="ph ph-map-pin"></i>
+  <label>Destino</label>
+</div>
+
+<input
+  type="text"
+  matInput
+  [matAutocomplete]="auto"
+  [value]="inputValue"
+  class="destination-input"
+  (input)="onValueChange($event)"
+/>
+
+<mat-autocomplete
+  #auto="matAutocomplete"
+  [displayWith]="displayFn"
+  class="autocomplete"
+>
+  @for (option of filteredOptions$ | async; track option.id) {
+  <mat-option
+    [value]="option"
+    (onSelectionChange)="onOptionSelected(option)"
+    class="autocomplete-option"
+  >
+    <div class="option-content">
+      <i class="ph ph-map-pin option-icone"></i>
+      <div class="option-details">
+         <span class="option-name">{{ option.name }}</span>
+        <span class="option-region">{{ option.region }}</span>
+      </div>
+    </div>
+  </mat-option>
+  }
+</mat-autocomplete>

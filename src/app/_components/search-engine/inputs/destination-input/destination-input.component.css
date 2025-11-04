@@ -1,0 +1,87 @@
+/* LABEL SECTION */
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label-row i {
+  font-size: 18px;
+  color: #0080ff;
+}
+
+.label-row label {
+  color: #76899e;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+/* INPUT FIELD */
+.destination-input {
+  border: none;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 26px;
+  width: 100%;
+}
+
+.destination-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* AUTOCOMPLETE MENU */
+::ng-deep .autocomplete {
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-top: 10px;
+
+  width: 313px;
+  height: auto;
+  max-height: 241px;
+}
+
+/* AUTOCOMPLETE OPTION */
+::ng-deep .autocomplete-option {
+  height: 70px;
+}
+
+::ng-deep .autocomplete-option:hover {
+  background-color: #e3ebf3 !important;
+}
+
+::ng-deep .autocomplete-option .mat-pseudo-checkbox {
+  display: none !important;
+}
+
+/* OPTION CONTENT */
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* OPTION DETAILS */
+.option-icone {
+  color: #0080ff;
+}
+
+.option-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.option-region {
+  color: #698096;
+  font-size: 10px;
+  font-weight: 400;
+}
