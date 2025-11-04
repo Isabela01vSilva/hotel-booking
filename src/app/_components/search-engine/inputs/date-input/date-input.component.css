@@ -66,3 +66,13 @@
   border: 1px solid #0080ff !important;
   border-radius: 50%;
 }
+
+/* ERROR MESSAGES */
+:host(.invalid) input {
+  border-bottom: 2px solid #9c221a !important;
+  background-color: #fff5f5;
+}
+
+:host(.invalid) .mat-form-field-label {
+  color: #f44336 !important;
+}

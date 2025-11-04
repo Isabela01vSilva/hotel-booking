@@ -1,63 +1,78 @@
-<form [formGroup]="form" class="search-box" (ngSubmit)="pesquisar()">
+<div
+  [ngClass]="{
+    'is-reversed': $isReversed | async,
+    'is-normal': !($isReversed | async)
+  }"
+>
+  <form
+    [formGroup]="form"
+    class="search-form"
+    [class.has-error]="hasError"
+    (ngSubmit)="search()"
+  >
+    <div class="search-form-content">
+      <!-- Destination -->
+      <div class="search-field search-field-destination">
+        <app-destination-input
+          formControlName="destination"
+          [class.invalid]="
+            buttonClicked && form.get('destination')?.invalid
+          "
+        />
+        @if (buttonClicked && form.get('destination')?.invalid) {
+        <small class="error-message">Preencha o Destino.</small>
+        }
+      </div>
 
-  <!-- Destino -->
- <div class="destination-field">
-  <label>Destino</label>
-  <input
-    type="text"
-    matInput
-    formControlName="suggestion"
-    [matAutocomplete]="auto"
-    [class.campo-invalido]="botaoClicado && form.get('suggestion')?.invalid"
-  />
+      <hr />
 
-  @if (botaoClicado && form.get('suggestion')?.invalid) {
-    <small class="erro">Preencha o destino.</small>
-  }
+      <!-- CheckIn -->
+      <div class="search-field search-field-checkin">
+        <app-date-input
+          formControlName="checkIn"
+          labelText="Entrada"
+          [class.invalid]="buttonClicked && form.get('checkIn')?.invalid"
+        />
+        @if (buttonClicked && form.get('checkIn')?.invalid) {
+        <small class="error-message">Preencha a Data de Entrada.</small>
+        }
+      </div>
 
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-    @for (option of filteredOptions$ | async; track option) {
-      <mat-option [value]="option">
-        <div class="suggestion-name">{{ option.name }}</div>
-        <div class="suggestion-region">{{ option.region }}</div>
-      </mat-option>
-    }
-  </mat-autocomplete>
-</div>
+      <hr />
 
-  <!-- ENTRADA -->
-  <app-date-input
-    labelText="Entrada"
-    formControlName="entrada"
-    [minDate]="today"
-    [class.campo-invalido]="botaoClicado && form.get('entrada')?.invalid"
-  />
-  @if (botaoClicado && form.get('entrada')?.invalid) {
-    <small class="erro">Preencha a data de entrada.</small>
-  }
+      <!-- CheckOut -->
+      <div class="search-field search-field-checkout">
+        <app-date-input
+          formControlName="checkOut"
+          labelText="Saída"
+          [class.invalid]="
+            buttonClicked && form.get('checkOut')?.invalid
+          "
+        />
+        @if (buttonClicked && form.get('checkOut')?.invalid) {
+        <small class="error-message">Preencha a Data de Saída</small>
+        } @if (buttonClicked && form.hasError('invalidDateRange')) {
+        <small class="error-message"
+          >A data de saída deve ser posterior à data de entrada.</small
+        >
+        }
+      </div>
 
-  <!-- SAÍDA -->
-  <app-date-input
-    labelText="Saída"
-    [minDate]="minSaida"
-    formControlName="saida"
-    [class.campo-invalido]="botaoClicado && form.get('saida')?.invalid"
-  />
-  @if (botaoClicado && form.get('saida')?.invalid) {
-    <small class="erro">Preencha a data de saída.</small>
-  }
+      <hr />
 
-  <!-- HÓSPEDES -->
-  <app-guest-input
-    formControlName="hospedes"
-  />
+      <!-- Guests -->
+      <div class="search-field search-field-guests">
+        <app-guest-input formControlName="guests" />
+      </div>
 
-  <!-- BOTÃO -->
-  <div class="search-item">
-    <app-button textoBotao="Pesquisar" type="submit" class="btn-search"></app-button>
+      <!-- Apply button -->
+      <div class="search-actions">
+        <app-button textBtn="Pesquisar" type="submit" />
+      </div>
+    </div>
+  </form>
+
+  <div class="router-container">
+    <router-outlet></router-outlet>
   </div>
-</form>
-
-<div>
-  <router-outlet></router-outlet>
 </div>
