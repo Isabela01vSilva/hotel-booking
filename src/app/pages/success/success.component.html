@@ -1,0 +1,31 @@
+<div class="booking-success-container">
+  @if (hotel$ | async; as hotel) {
+  <div class="success-container">
+    <h2 class="success-title">Reserva realizada com sucesso!</h2>
+    <div class="hotel-info">
+      <p><b>Hotel:</b> {{ hotel.hotel.name }}</p>
+    </div>
+
+    @if (checkoutData$ | async; as checkoutData) {
+    <div class="booking-info">
+      <b class="subtitle">Hóspedes</b>
+      @for (hospede of checkoutData.guests; track $index) {
+      <p class="guest-info">
+        <span>Nome: {{ hospede.name }}</span>
+        <span>Sobrenome: {{ hospede.lastname }}</span>
+      </p>
+      }
+    </div>
+
+    <div class="booking-info">
+      <b class="subtitle">Contato</b>
+      <p class="guest-info">
+        <span>Nome: {{ checkoutData.contactName }}</span>
+        <span>Email: {{ checkoutData.contactEmail }}</span>
+        <span>Telefone: {{ checkoutData.contactPhone }}</span>
+      </p>
+    </div>
+    }
+  </div>
+  }
+</div>

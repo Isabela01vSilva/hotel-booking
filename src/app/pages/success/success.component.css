@@ -1,5 +1,5 @@
-.reserva-sucesso-container {
-  background-color: #123952F2;
+.booking-success-container {
+  background-color: #123952f2;
   color: #ffffff;
   height: 100vh;
   width: 100vw;
@@ -11,10 +11,17 @@
   align-items: center;
 }
 
-.sucesso-container {
+.success-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  gap: 8px;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: 0%;
 }
 
+.guest-info {
+  display: flex;
+  flex-direction: column;
+}

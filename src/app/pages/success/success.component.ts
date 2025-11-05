@@ -1,4 +1,4 @@
-import { checkoutData } from './../../entity/state/checkout/checkout-data.selectors';
+import { checkoutData } from '../../entity/state/checkout/checkout-data.selectors';
 import { Component, OnInit } from '@angular/core';
 import { IHotel } from '../../entity/hotel.interface';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { hotelsByIdSelector } from '../../entity/state/hotel/hotel.selectors';
   templateUrl: './success.component.html',
   styleUrl: './success.component.css',
 })
-export class SucessComponent implements OnInit {
+export class SuccessComponent implements OnInit {
   checkoutData$!: Observable<ICheckoutData>;
   hotel$!: Observable<IHotel>;
 
@@ -21,9 +21,6 @@ export class SucessComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkoutData$ = this.store.select(checkoutData());
-    this.checkoutData$.subscribe((data) => {
-      console.log('Dados de checkout recebidos:', data);
-    });
 
     this.hotel$ = this.store.select((state: any) => {
       const id = state.checkoutData?.hotelId!;
