@@ -15,6 +15,11 @@
   transition: height 0.3s ease;
 }
 
+.router-container {
+  width: 100vw;
+  max-width: 1500px
+}
+
 /* FORM LAYOUT VARIATIONS */
 .is-reversed {
   flex-direction: column-reverse;
