@@ -1,3 +1,8 @@
+.home-content {
+  padding: 2rem;
+  text-align: center;
+}
+
 h1 {
   font-size: 24px;
   text-align: center;
@@ -13,7 +18,6 @@ h1 .home-title {
 h1 .home-title-sub{
   color: #0080ff;
 }
-
 @media (min-width: 768px) {
   h1 {
     font-size: 40px;

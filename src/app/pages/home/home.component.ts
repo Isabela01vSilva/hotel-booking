@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
-   ngOnInit(): void {
-     this.activate.emit
-   }
-
-   @Output() activate = new EventEmitter<void>();
-
-
-
+export class HomeComponent {
+  constructor(private shared: SharedService) {
+    this.shared.setInitialized(true);
+  }
 }
