@@ -1,16 +1,16 @@
 @if (searchInputData$ | async; as searchInput) {
 <div class="page-container">
-  <div class="search-summary d-flex justify-content-between align-items-center">
+  <div class="search-summary">
     <div class="search-info">
-      <p>
-        <b class="location-title"> {{ searchInput.destinationName }} </b>
-        {{ searchInput.region }}
-      </p>
-      <p class="hotel-count">
+      <div class="location-info">
+        <b>{{ searchInput.destinationName }}, </b>
+        <span>{{ searchInput.region }}</span>
+      </div>
+      <span class="hotel-count">
         {{ (hotelIds$ | async)!!.length }} hotéis encontrados
-      </p>
+      </span>
     </div>
-    <app-hotel-filters></app-hotel-filters>
+    <app-hotel-filters />
   </div>
 
   <div class="card-grid">

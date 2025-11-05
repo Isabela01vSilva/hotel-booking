@@ -1,9 +1,37 @@
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.page-container {
-  margin: 5px 45px;
+.search-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.search-info{
+  line-height: 26px;
+  letter-spacing: 0%;
+}
+
+.location-info {
+  color: #000f39;
+  font-size: 20px;
+}
+
+.location-info b {
+  font-weight: 800;
+}
+
+.hotel-count {
+  font-size: 12px;
+  color: #698096;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 }

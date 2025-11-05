@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { hotelsActions } from '../../entity/state/hotel/hotel.actions';
-import { ActivatedRoute } from '@angular/router';
 import { HotelFiltersComponent } from "../../_components/hotel-filters/hotel-filters.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { ISearchInputData } from '../../entity/search-input-data.interface';
 import { searchInputData } from '../../entity/state/search/search-input-data.selectors';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-search',
@@ -28,9 +28,10 @@ export class SearchComponent implements OnInit {
   sugestionName = "";
   sugestionRegion = "";
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private shared: SharedService) {}
 
   ngOnInit(): void {
+    this.shared.setInitialized(false);
     this.store.dispatch(hotelsActions.findHotels());
     this.hotelIds$ = this.store.select(hotelsSelector);
 

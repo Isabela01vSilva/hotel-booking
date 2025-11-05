@@ -1,12 +1,12 @@
 .card {
-  width: 397px;
+  width: 440px;
   height: 350px;
   background-color: #ffffff;
   border-radius: 14px;
   border: 1px solid #ddd;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
-/* Imagem */
+
 .card-image-wrapper {
   position: relative;
   display: inline-block;
@@ -15,6 +15,7 @@
   border-radius: 14px;
   overflow: hidden;
 }
+
 .card-image {
   display: block;
   width: 100%;
@@ -23,6 +24,7 @@
   position: relative;
   z-index: 1;
 }
+
 .card-image-wrapper::after {
   content: "";
   position: absolute;
@@ -31,7 +33,7 @@
   box-shadow: 0 -68px 76px #0080ff59 inset;
   z-index: 2;
 }
-/* Preço */
+
 .card-price {
   position: absolute;
   bottom: 8px;
@@ -50,7 +52,7 @@
   line-height: 26px;
   letter-spacing: 0;
 }
-/* Informações */
+
 .card-info {
   margin: 15px;
 }
@@ -70,7 +72,6 @@
   height: 28px;
 }
 
-/* Estrelas */
 .card-stars {
   display: flex;
   flex-direction: row;
