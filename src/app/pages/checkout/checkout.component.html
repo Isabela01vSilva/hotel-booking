@@ -1,174 +1,183 @@
-<h4 class="reserva-titulo">Finalize sua reserva!</h4>
-<form [formGroup]="checkoutForm" class="reserva-form" (ngSubmit)="submitForm()">
-  @if (hotel$ | async; as hotel) {
-  <div class="reserva-container">
-    <div class="dados-reserva">
-      <!-- Dados do hóspede -->
-      <div class="bloco-dados">
-        <p class="titulo">Hotel: {{ hotel.hotel.name }}</p>
+<div class="content-checkout">
+  <p class="booking-title">Finalize sua reserva!</p>
+  <form [formGroup]="checkoutForm" (ngSubmit)="submitForm()">
+    @if (hotel$ | async; as hotel) {
+    <div class="booking-container">
+      <div class="booking-date">
+        <!-- Dados do hóspede -->
+        <div class="date-block">
+          <p class="title">Hotel: {{ hotel.hotel.name }}</p>
 
-        <!-- Nome dos Hospedes -->
-        <div formArrayName="guests">
-          @for (guest of guests.controls; track $index) {
-          <div class="linha-inputs" [formGroupName]="$index">
-            <div class="campo-form">
-              <label for="firstName">Nome (Hóspede {{ $index + 1 }})</label>
+          <!-- Nome dos Hospedes -->
+          <div formArrayName="guests">
+            @for (guest of guests.controls; track $index) {
+            <div class="input-row" [formGroupName]="$index">
+              <div class="form-field">
+                <label for="firstName">Nome (Hóspede {{ $index + 1 }})</label>
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  [class.invalid-field]="isInvalid(guest.get('firstName'))"
+                />
+                @if (isInvalid(guest.get('firstName'))) {
+                <small class="error">Preencha o nome do hóspede.</small>
+                }
+              </div>
+
+              <!-- sobrenome -->
+              <div class="form-field">
+                <label for="lastName">Sobrenome</label>
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  [class.invalid-field]="isInvalid(guest.get('lastName'))"
+                />
+                @if (isInvalid(guest.get('lastName'))) {
+                <small class="error">Preencha o sobrenome do hóspede.</small>
+                }
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Dados de contato -->
+        <div class="date-block">
+          <p class="title">Contato da reserva</p>
+          <div class="input-row">
+            <div class="form-field">
+              <!-- Nome de contato -->
+              <label for="contact-name">Nome</label>
               <input
                 type="text"
-                formControlName="firstName"
-                [class.campo-invalido]="isInvalid(guest.get('firstName'))"
+                id="contato-nome"
+                name="contato-nome"
+                placeholder="Digite um nome"
+                formControlName="contactName"
+                [class.invalid-field]="
+                  isInvalid(checkoutForm.get('contactName'))
+                "
               />
-              @if (isInvalid(guest.get('firstName'))) {
-              <small class="erro">Preencha o nome do hóspede.</small>
+              @if (isInvalid(checkoutForm.get('contactName'))) {
+              <small class="error">Preencha o nome do contato.</small>
               }
             </div>
 
-            <!-- sobrenome -->
-            <div class="campo-form">
-              <label for="lastName">Sobrenome</label>
+            <!-- Email -->
+            <div class="form-field">
+              <label for="contactEmail">Email</label>
               <input
-                type="text"
-                formControlName="lastName"
-                [class.campo-invalido]="isInvalid(guest.get('lastName'))"
+                type="email"
+                id="contactEmail"
+                placeholder="Digite seu e-mail"
+                formControlName="contactEmail"
+                [class.invalid-field]="
+                  isInvalid(checkoutForm.get('contactEmail'))
+                "
               />
-              @if (isInvalid(guest.get('lastName'))) {
-              <small class="erro">Preencha o sobrenome do hóspede.</small>
+              @if (hasError('contactEmail', 'required')) {
+              <small class="error">Informe um email de contato.</small>
+              } @if (hasError('contactEmail', 'email')) {
+              <small class="error"
+                >Formato de e-mail inválido. Ex: nome&#64;dominio.com</small
+              >
+              }
+            </div>
+
+            <!-- Telefone -->
+            <div class="form-field">
+              <label for="contactPhone">Telefone (WhatsApp)</label>
+              <input
+                type="tel"
+                id="contactPhone"
+                placeholder="(XX) XXXXX-XXXX"
+                formControlName="contactPhone"
+                [class.invalid-field]="
+                  isInvalid(checkoutForm.get('contactPhone'))
+                "
+              />
+              @if (hasError('contactPhone', 'required')) {
+              <small class="error">Informe um telefone para contato.</small>
+              } @if (hasError('contactPhone', 'pattern')) {
+              <small class="error"
+                >Formato inválido. Use o padrão (XX) XXXXX-XXXX.</small
+              >
               }
             </div>
           </div>
-          }
+
+          <!-- observação -->
+          <div class="form-field">
+            <label for="notes">Observações</label>
+            <textarea
+              id="notes"
+              rows="4"
+              placeholder="Sua mensagem"
+              formControlName="notes"
+            ></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- Dados de contato -->
-      <div class="bloco-dados">
-        <p class="titulo">Contato da reserva</p>
-        <div class="linha-inputs">
-          <div class="campo-form">
-            <!-- Nome de contato -->
-            <label for="contato-nome">Nome</label>
-            <input
-              type="text"
-              id="contato-nome"
-              name="contato-nome"
-              placeholder="Digite um nome"
-              formControlName="contactName"
-              [class.campo-invalido]="
-                isInvalid(checkoutForm.get('contactName'))
-              "
-            />
-            @if (isInvalid(checkoutForm.get('contactName'))) {
-            <small class="erro">Preencha o nome do contato.</small>
-            }
-          </div>
+      <!-- Resumo da reserva -->
+      <div class="summary-block">
+        <span class="reservation-title">Sua reserva</span>
+        <div class="summary-hotel-info">
+          <span class="reservation-title-hotel">{{ hotel.hotel.name }}</span>
+          <span class="summary-address">{{ hotel.hotel.address }}</span>
+          <div class="sumary-room">
+            <span> {{ getRoomByName(hotel, roomName).roomType.name }}</span>
+            @if (getRoomByName(hotel, roomName).cancellationPolicies.refundable
+            ) {
+            <div class="room-cancellation">
+              <i class="ph-bold ph-check-circle"></i>
+              <span>Cancelamento gratuito</span>
+            </div>
 
-          <!-- Email -->
-          <div class="campo-form">
-            <label for="contactEmail">Email</label>
-            <input
-              type="email"
-              id="contactEmail"
-              placeholder="Digite seu e-mail"
-              formControlName="contactEmail"
-              [class.campo-invalido]="
-                isInvalid(checkoutForm.get('contactEmail'))
-              "
-            />
-            @if (hasError('contactEmail', 'required')) {
-            <small class="erro">Informe um email de contato.</small>
-            } @if (hasError('contactEmail', 'email')) {
-            <small class="erro"
-              >Formato de e-mail inválido. Ex: nome&#64;dominio.com</small
-            >
-            }
-          </div>
-
-          <!-- Telefone -->
-          <div class="campo-form">
-            <label for="contactPhone">Telefone (WhatsApp)</label>
-            <input
-              type="tel"
-              id="contactPhone"
-              placeholder="(XX) XXXXX-XXXX"
-              formControlName="contactPhone"
-              [class.campo-invalido]="
-                isInvalid(checkoutForm.get('contactPhone'))
-              "
-            />
-            @if (hasError('contactPhone', 'required')) {
-            <small class="erro">Informe um telefone para contato.</small>
-            } @if (hasError('contactPhone', 'pattern')) {
-            <small class="erro"
-              >Formato inválido. Use o padrão (XX) XXXXX-XXXX.</small
-            >
+            }@else {
+            <div class="room-cancellation penalty">
+              <i class="ph-bold ph-x-circle penalty"></i>
+              <span>Multa de cancelamento</span>
+            </div>
             }
           </div>
         </div>
+        <div class="summary-value-total">
+          <div class="summary-value">
+            <span>Imposto e taxa</span>
+            <b class="summary-total-tax">
+              {{
+                getRoomByName(hotel, roomName).price.amount *
+                  0.1 *
+                  calculateStayDays(searchInputData$ | async) +
+                  50
+                  | currency
+                    : getRoomByName(hotel, roomName).price.currency
+                    : "symbol"
+              }}
+            </b>
+          </div>
 
-        <!-- observação -->
-        <div class="campo-form">
-          <label for="notes">Observações</label>
-          <textarea
-            id="notes"
-            rows="4"
-            placeholder="Sua mensagem"
-            formControlName="notes"
-          ></textarea>
+          <div class="summary-value">
+            <span>Total</span>
+            <b class="summary-total">
+              {{
+                (getRoomByName(hotel, roomName).price.amount +
+                  getRoomByName(hotel, roomName).price.amount * 0.03) *
+                  calculateStayDays(searchInputData$ | async) +
+                  50
+                  | currency
+                    : getRoomByName(hotel, roomName).price.currency
+                    : "symbol"
+              }}
+            </b>
+          </div>
+        </div>
+        <div class="reservation">
+          <app-button textBtn="RESERVAR" type="submit"></app-button>
         </div>
       </div>
     </div>
-
-    <!-- Resumo da reserva -->
-    <div class="bloco-resumo">
-      <h2>Sua reserva</h2>
-      <h2 class="resumo-detalhes">{{ hotel.hotel.name }}</h2>
-
-      <p class="resumo-endereco">
-        {{ hotel.hotel.address }}
-      </p>
-
-      <p class="resumo-quarto-tipo">
-        {{ getRoomByName(hotel, roomName).roomType.name }}
-      </p>
-      @if (getRoomByName(hotel, roomName).cancellationPolicies.refundable ) {
-      <p class="resumo-quarto-status">Cancelamento gratuito</p>
-      }@else {
-      <p class="resumo-quarto-status">Multa de cancelamento</p>
-      }
-
-      <!-- Imposto + taxa -->
-      <div class="resumo-valor">
-        <p>Imposto e taxa</p>
-        <p>
-          {{
-            getRoomByName(hotel, roomName).price.amount *
-              0.1 *
-              calculateStayDays(searchInputData$ | async) +
-              50
-              | currency
-                : getRoomByName(hotel, roomName).price.currency
-                : "symbol"
-          }}
-        </p>
-      </div>
-
-      <!-- TOTAL -->
-      <div class="resumo-total">
-        <p>Total</p>
-        <h2>
-          {{
-            (getRoomByName(hotel, roomName).price.amount +
-              getRoomByName(hotel, roomName).price.amount * 0.03) *
-              calculateStayDays(searchInputData$ | async) +
-              50
-              | currency
-                : getRoomByName(hotel, roomName).price.currency
-                : "symbol"
-          }}
-        </h2>
-      </div>
-      <app-button textoBotao="RESERVAR" type="submit"></app-button>
-    </div>
-  </div>
-  }
-</form>
+    }
+  </form>
+</div>

@@ -115,8 +115,6 @@ export class CheckoutComponent implements OnInit {
         guests,
       };
 
-      console.log('CheckoutData sendo salvo:', checkoutData);
-
       this.store.dispatch(
         checkoutDataActions.saveCheckoutData({ checkoutData, hotelId: this.hotelId })
       );
