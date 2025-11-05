@@ -1,38 +1,30 @@
 @if (hotel$ | async; as hotel) {
-<div class="hotel-container">
-  <div class="hotel-hero">
-    <div class="hotel-info d-flex">
-      <img
-        src="{{ hotel.hotel.image }}"
-        alt="{{ hotel.hotel.name }}"
-        class="hotel-image"
-      />
+  <div class="hotel-content">
+    <div class="hotel-content-info">
+      <img src="{{ hotel.hotel.image }}" alt="{{ hotel.hotel.name }}" />
       <div class="hotel-info">
-        <h1 class="hotel-name">{{ hotel.hotel.name }}</h1>
-
-        <div class="hotel-location d-flex align-items-center">
-          <i class="ph ph-map-pin me-1"></i>
-          <h3 class="hotel-address">{{ hotel.hotel.address }}</h3>
+        <div class="hotel-header">
+          <span class="hotel-name">{{ hotel.hotel.name }}</span>
+          <div class="hotel-location">
+            <i class="ph ph-map-pin"></i>
+            <span>{{ hotel.hotel.address }}</span>
+          </div>
         </div>
-
         <div class="hotel-rating">
           @for (s of getStarsArray(hotel.hotel.stars); track $index) {
           <i class="ph-fill ph-star star-icon"></i>
           }
         </div>
-
         <p class="hotel-description">{{ hotel.hotel.description }}</p>
       </div>
     </div>
-
-    <div>
-      <h3 class="available-rooms-title mt-4">Quartos Disponíveis</h3>
-      <div>
+    <div class="hotel-rooms">
+      <p class="hotel-rooms__title">Quartos disponíveis</p>
+      <div class="hotel-rooms__list">
         @for (room of hotel.rooms; track $index) {
         <app-room-option [room]="room" [hotelId]="hotel.id"></app-room-option>
         }
       </div>
     </div>
   </div>
-</div>
 }

@@ -1,13 +1,17 @@
 .room-card {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  border: none;
+  align-items: center;
   border-radius: 14px;
   background-color: #e3ebf3;
   height: 88px;
+  padding: 10px 20px;
 }
-
+.room-info{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 .room-title {
   font-weight: 600;
   font-size: 16px;
@@ -27,26 +31,27 @@
 .penalty {
   color: #ff0000;
 }
-/*  */
+
 .room-booking{
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 40px;
 }
 
 .room-price {
   color: #0080ff;
-  font-size: 15px;
+  font-size: 13px;
   display: flex;
+  align-items: end;
 }
 .room-price b {
   font-weight: 600;
-  font-size: 27px;
+  font-size: 26px;
   line-height: 26px;
   letter-spacing: 0;
 }
 .room-payment {
-  color: #bfccd9;
+  color: #698096;
   font-size: 12px;
   line-height: 26px;
   letter-spacing: 0;
