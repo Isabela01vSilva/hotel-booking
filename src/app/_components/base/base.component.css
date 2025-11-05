@@ -1,6 +1,15 @@
-.base {
-  background-color: #e3ebf3;
+.app-layout {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  background-color: #e3ebf3;
+}
+
+.layout-content {
+  flex: 1;
+  padding: 30px 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

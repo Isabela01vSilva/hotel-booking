@@ -42,7 +42,7 @@ export class HeaderComponent {
     this.isWhiteBg$ = this.showHomeLink$;
   }
 
-  pesquisar() {
+  goHome() {
     this.router.navigate(['/']);
   }
 }
