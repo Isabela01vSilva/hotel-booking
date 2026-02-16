@@ -13,8 +13,9 @@ Projeto desenvolvido como parte de um teste técnico, com o objetivo de construi
 - **Angular 19**
 - **TypeScript**
 - **RxJS**
-- **Tailwind CSS**
+- **CSS**
 - **Angular Router**
+- **Angular Material**
 
 ---
 
@@ -60,3 +61,4 @@ O layout foi baseado no Figma disponibilizado no desafio técnico:
    pnpm install
    pnpm run server
 ---
+
