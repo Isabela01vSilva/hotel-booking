@@ -58,7 +58,8 @@ O layout foi baseado no Figma disponibilizado no desafio técnico:
    ```bash
    git clone https://github.com/enio-infotera/infotera-frontend-test-server.git
    cd infotera-frontend-test-server
-   pnpm install
-   pnpm run server
+   yarn install
+   yarn server
 ---
+
 
