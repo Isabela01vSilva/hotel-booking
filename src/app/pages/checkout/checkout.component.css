@@ -60,7 +60,9 @@
 }
 
 .form-field input {
-  width: 300px;
+  width: 100%;
+  min-width: 0;
+
   height: 30px;
   padding: 8px 10px;
   border-radius: 4px;
@@ -107,7 +109,8 @@
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   height: 320px;
-  width: 353px;
+  width: 100%;
+  max-width: 353px;
 }
 
 .reservation-title {
@@ -200,5 +203,37 @@
   height: 38px;
   border-radius: 50px;
   font-weight: 700;
-  width: 316px;
+  width: 100%;  
+}
+
+@media (max-width: 768px) {
+  .content-checkout {
+    width: 100%;
+  }
+
+  .booking-container {
+    flex-direction: column;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  .form-field {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .summary-block {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .reservation ::ng-deep app-button button {
+    width: 100%;
+  }
+
+  .summary-total {
+    font-size: 18px;
+  }
 }

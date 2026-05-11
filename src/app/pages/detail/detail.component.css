@@ -10,8 +10,10 @@
   gap: 20px;
 }
 .hotel-content-info img {
-  width: 447px;
-  height: 312.5px;
+  width: 100%;
+  max-width: 447px;
+  height: auto;
+
   border-radius: 14px;
   box-shadow: 0px 0px 11px 0px #0000001c;
 }
@@ -67,4 +69,31 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .hotel-content {
+    padding: 16px;
+  }
+
+  .hotel-content-info {
+    flex-direction: column;
+  }
+
+  .hotel-content-info img {
+    max-width: 100%;
+  }
+
+  .hotel-name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .hotel-description {
+    line-height: 20px;
+  }
+
+  .hotel-rooms {
+    padding-top: 24px;
+  }
 }

@@ -32,6 +32,22 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .search-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .location-info {
+    font-size: 18px;
+  }
+
+  .card-grid {
+    gap: 20px;
+  }
 }
