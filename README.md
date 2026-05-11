@@ -24,6 +24,7 @@ Projeto desenvolvido como parte de um teste técnico, com o objetivo de construi
 - 📝 Página de detalhes com informações e galeria do hotel
 - 🛏️ Seleção de quarto
 - 📦 Checkout com formulário validado
+- 📱 Layout responsivo para mobile, tablet e desktop
 
 ---
 
