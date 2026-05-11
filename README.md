@@ -11,9 +11,12 @@ Projeto desenvolvido como parte de um teste técnico, com o objetivo de construi
 - Angular 19
 - TypeScript
 - RxJS
+- Ngrx
 - CSS
 - Angular Router
 - Angular Material
+- Jasmine
+- Karma
 
 ---
 
@@ -39,21 +42,6 @@ O layout foi baseado no Figma disponibilizado no desafio técnico:
 ## 🏗️ Arquitetura
 
 O projeto segue uma arquitetura baseada em componentes reutilizáveis, separação de responsabilidades e gerenciamento de estado, visando escalabilidade e manutenção da aplicação.
-
----
-
-## 🧪 Testes
-
-Foram implementados testes unitários para garantir o comportamento esperado da aplicação, incluindo:
-
-- Validação de formulários
-- Renderização de componentes
-- Consumo de API
-- Fluxos de busca e checkout
-
-Tecnologias:
-- Jasmine
-- Karma
   
 ---
 
